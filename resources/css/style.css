@@ -1,0 +1,785 @@
+/* =========================================================
+   RESET DAN BASE STYLE
+========================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    scroll-behavior: smooth; /* IMPROVEMENT: scroll halus */
+}
+
+body {
+    color: #333;
+    line-height: 1.6;
+    background-color: #f5fdff;
+}
+
+/* =========================================================
+   NAVIGATION BAR
+========================================================= */
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 15px 30px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.85); /* IMPROVEMENT: semi-transparan */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* IMPROVEMENT: shadow lembut */
+    transition: all 0.3s ease;
+}
+
+.navigation:hover {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.navigation-list {
+    text-decoration: none;
+    color: #004080;
+    margin: 0 10px;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.navigation-list p {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.navigation-list:hover {
+    color: #ffd700;
+    transform: translateY(-2px); /* IMPROVEMENT: efek hover ringan */
+}
+
+.navigation img {
+    height: 50px;
+    width: auto;
+    margin-left: auto;
+    display: block;
+}
+
+.login-button {
+    background-color: #ffd700;
+    border: none;
+    padding: 10px 16px;
+    color: #333;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #012951;
+    color: #ffd700;
+    transform: scale(1.05); /* IMPROVEMENT */
+}
+
+/* =========================================================
+   HOME SECTION
+========================================================= */
+.home {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.home h1 {
+    font-size: 36px;
+    color: #004080;
+    margin-bottom: 20px;
+    animation: fadeInDown 1s ease; /* IMPROVEMENT: animasi */
+}
+
+.home p {
+    font-size: 18px;
+    color: #444;
+    max-width: 800px;
+    margin: 0 auto 30px;
+}
+
+.home iframe {
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* IMPROVEMENT: animasi */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================
+   STRUKTUR ORGANISASI
+========================================================= */
+.struktur {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #ffffff;
+}
+
+.struktur h2 {
+    font-size: 28px;
+    color: #004080;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.struktur h2::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: #ffd700;
+    margin: 10px auto 0;
+    border-radius: 2px; /* IMPROVEMENT: underline dekoratif */
+}
+
+#gambar-organisasi {
+    max-width: 100%;
+    height: auto;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+#gambar-organisasi:hover {
+    transform: scale(1.03); /* IMPROVEMENT: efek zoom */
+}
+
+/* =========================================================
+   LAYANAN UMUM
+========================================================= */
+.layanan {
+    padding: 60px 20px;
+}
+
+.layanan h2 {
+    font-size: 28px;
+    color: #004080;
+    margin-bottom: 20px;
+}
+
+.layanan h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #006699;
+}
+
+.layanan p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.layanan ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.layanan li {
+    margin-bottom: 8px;
+    transition: transform 0.2s ease;
+}
+
+.layanan li:hover {
+    transform: translateX(5px);
+}
+
+/* =========================================================
+   VISI MISI TUJUAN
+========================================================= */
+.visi {
+    padding: 60px 20px;
+    background-color: #f0f8ff; /* IMPROVEMENT: beda tone */
+    border-radius: 15px;
+    margin: 40px;
+}
+
+.visi h2 {
+    font-size: 28px;
+    color: #004080;
+    margin-bottom: 20px;
+}
+
+.visi h3 {
+    font-size: 22px;
+    color: #006699;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.visi p, .visi ol {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.visi ol {
+    padding-left: 20px;
+}
+
+/* =========================================================
+   LOGIN PAGE
+========================================================= */
+/* =========================================================
+   LOGIN PAGE STYLE (REVISED + IMPROVED)
+========================================================= */
+
+body.login-page {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #004080, #0066cc);
+    background-attachment: fixed;
+    color: #fff;
+}
+
+/* Back button di pojok kiri atas */
+.login-page .header-text {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: transparent;
+    border: 2px solid #ffd700;
+    color: #ffd700;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-page .header-text:hover {
+    background-color: #ffd700;
+    color: #004080;
+}
+
+/* Kotak Form Login */
+.login-page form {
+    background-color: #ffffff;
+    color: #333;
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    animation: fadeIn 0.8s ease;
+}
+
+/* Judul */
+.login-page form h1 {
+    font-size: 22px;
+    color: #004080;
+    margin-bottom: 20px;
+}
+
+/* Input Fields */
+.login-page input[type="email"],
+.login-page input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-page input[type="email"]:focus,
+.login-page input[type="password"]:focus {
+    border-color: #004080;
+    box-shadow: 0 0 6px rgba(0, 64, 128, 0.3);
+    outline: none;
+}
+
+/* Tombol Submit */
+.login-page input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-image: linear-gradient(#004080, #0053a7);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.login-page input[type="submit"]:hover {
+    background: linear-gradient(#003366, #004080);
+    transform: scale(1.03);
+}
+
+/* Pesan Error */
+.login-page p {
+    color: red;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+/* Animasi masuk */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsif */
+@media (max-width: 600px) {
+    .login-page form {
+        padding: 30px 20px;
+    }
+
+    .login-page .header-text {
+        top: 10px;
+        left: 10px;
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+}
+
+
+/* =========================================================
+   DATA MASTER
+========================================================= */
+/* =========================================================
+   DATA MASTER DASHBOARD OPTIONS
+========================================================= */
+.dm-option {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 25px;
+    justify-items: center;
+    align-items: center;
+    max-width: 1000px;
+    margin: 80px auto;
+    padding: 20px;
+   
+}
+
+.dm-option a {
+     border: 2px solid #004080;
+    text-decoration: none;
+    width: 100%;
+    background-color: transparent;
+    
+    color: #004080;
+    border-radius: 15px;
+    padding: 50px 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dm-option a:hover {
+    background-color: #ffd700;
+    color: #004080;
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 64, 128, 0.25);
+}
+
+.dm-option h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dm-option {
+        grid-template-columns: 1fr;
+        margin-top: 50px;
+    }
+    .dm-option a {
+        padding: 40px 10px;
+    }
+    .dm-option h2 {
+        font-size: 16px;
+    }
+}
+
+/* =========================================================
+   KELOLA USER (TABEL)
+========================================================= */
+.user-table {
+    width: 80%;
+    margin: 40px auto;
+    border-collapse: collapse;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.user-table th, .user-table td {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.user-table th {
+    background-color: #004080;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.user-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.user-table tr:hover {
+    background-color: #eef6ff; /* IMPROVEMENT: warna hover lebih lembut */
+}
+
+.user-table td a {
+    color: #0053a7;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 5px;
+    transition: color 0.2s ease;
+}
+
+.user-table td a:hover {
+    color: #004080;
+    text-decoration: underline;
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN
+========================================================= */
+@media (max-width: 768px) {
+    .navigation {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 20px;
+    }
+
+    .navigation img {
+        margin-top: 10px;
+    }
+
+    .home td {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    iframe {
+        width: 100%;
+        height: auto;
+    }
+
+    .user-table {
+        width: 95%;
+        margin: 20px auto;
+    }
+
+    .user-table th, .user-table td {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .visi {
+        margin: 20px;
+        padding: 40px 15px;
+    }
+}
+
+/* =========================================================
+   KELOLA JENIS HEWAN
+========================================================= */
+.jenis-table-container {
+    width: 60%;
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px 20px;
+    overflow-x: auto;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.jenis-table-container h2 {
+    color: #004080;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 28px;
+    position: relative;
+}
+
+.jenis-table-container h2::after {
+    content: "";
+    width: 80px;
+    height: 4px;
+    background-color: #ffd700;
+    border-radius: 3px;
+    display: block;
+    margin: 10px auto;
+}
+
+/* Gunakan class user-table agar konsisten */
+.user-table {
+    width: 80%;
+    border-collapse: collapse;
+    text-align: left;
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 16px;
+}
+
+.user-table th {
+    background-color: #004080;
+    color: #fff;
+    padding: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.user-table td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.user-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.user-table tr:hover {
+    background-color: #eef6ff;
+    transition: 0.3s ease;
+}
+
+/* Aksi link (update/delete) */
+.user-table td a {
+    display: inline-block;
+    color: #0053a7;
+    font-weight: 600;
+    text-decoration: none;
+    margin-right: 10px;
+    transition: color 0.3s ease;
+}
+
+.user-table td a:hover {
+    color: #004080;
+    text-decoration: underline;
+}
+
+/* Tombol Tambah */
+.user-table button {
+    background-color: #ffd700;
+    color: #333;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.user-table button:hover {
+    background-color: #004080;
+    color: #ffd700;
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .jenis-table-container {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .user-table th, .user-table td {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .user-table button {
+        width: 100%;
+        font-size: 15px;
+        padding: 12px;
+    }
+}
+
+/* =========================================================
+   FORM TAMBAH USER / FORM INPUT ADMIN
+========================================================= */
+.form-container {
+    width: 90%;
+    max-width: 500px;
+    margin: 60px auto;
+    background-color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 0.5s ease;
+}
+
+.form-container h2 {
+    text-align: center;
+    color: #004080;
+    margin-bottom: 25px;
+    font-size: 26px;
+    font-weight: 700;
+    position: relative;
+}
+
+.form-container h2::after {
+    content: "";
+    width: 70px;
+    height: 3px;
+    background-color: #ffd700;
+    display: block;
+    margin: 8px auto 0;
+    border-radius: 2px;
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* Input fields */
+.form-container input[type="text"],
+.form-container input[type="email"],
+.form-container input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-container input:focus {
+    border-color: #004080;
+    box-shadow: 0 0 5px rgba(0, 64, 128, 0.3);
+    outline: none;
+}
+
+/* Button style */
+.form-container button {
+    background-color: #ffd700;
+    color: #333;
+    border: none;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-container button:hover {
+    background-color: #004080;
+    color: #ffd700;
+    transform: translateY(-2px);
+}
+
+/* Responsive form */
+@media (max-width: 768px) {
+    .form-container {
+        width: 95%;
+        padding: 30px 20px;
+    }
+
+    .form-container h2 {
+        font-size: 22px;
+    }
+
+    .form-container input, .form-container button {
+        font-size: 15px;
+    }
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: transparent;
+    border: 2px solid  #004080;
+    color:  #004080;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #ffd700;
+    color: #004080;
+}
+
+.add-button {
+    position: absolute;
+    top: 90px;
+    left: 20px;
+    background-color: transparent;
+    border: 2px solid  #004080;
+    color:  #004080;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-button:hover {
+    background-color: #ffd700;
+    color: #004080;
+}
+
+/* =========================================================
+   GREETING (Selamat Datang User)
+========================================================= */
+.greeting {
+    text-align: center;
+    margin-top: 60px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #004080;
+    background-color: #ffffff;
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 64, 128, 0.15);
+    display: inline-block;
+    animation: fadeIn 0.8s ease;
+}
+
+/* Highlighted name (if you want to emphasize user name) */
+.greeting span {
+    color: #ffd700;
+}
+
+/* Optional subtle fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive tweak */
+@media (max-width: 768px) {
+    .greeting {
+        font-size: 22px;
+        padding: 15px 20px;
+        margin-top: 40px;
+    }
+}
