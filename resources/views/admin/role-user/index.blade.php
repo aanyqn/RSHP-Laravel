@@ -5,7 +5,7 @@
             <th>Nama</th>
             <th>Email</th>
             <th>Role</th>
-            <th>status</th>
+            <th>Status</th>
         </tr>
     </thead>
     <tbody>
@@ -15,7 +15,15 @@
                 <td>{{ $item->user->nama }}</td>
                 <td>{{ $item->user->email }}</td>
                 <td>{{ $item->role->nama_role }}</td>
-                <td>{{ $item->role->status }}</td>
+                    @if (!$item->status) 
+                    {
+                        <td>Tidak Aktif</td>
+                    }
+                    @else
+                    {
+                        <td>Aktif</td>
+                    }
+                    @endif
             </tr>
         @endforeach
     </tbody>

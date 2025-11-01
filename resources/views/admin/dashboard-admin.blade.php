@@ -1,0 +1,73 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Dashboard') }}</div>
+
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    {{ __('You are logged in!') }} {{ session('user_role_name') }}
+
+                    <div class="mt-4">
+                        <div class="row">
+                            <div class="col-md-12 mb-2">
+                                <a href="{{ route('admin.jenis-hewan.index') }}" class="btn btn-primary btn-block">
+                                    <i class="fas fa-paw"></i> Jenis Hewan
+                                </a>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <a href="{{ route('admin.pemilik.index') }}" class="btn btn-primary btn-block">
+                                    <i class="fas fa-paw"></i> Pemilik
+                                </a>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <a href="{{ route('admin.kategori.index') }}" class="btn btn-primary btn-block">
+                                    <i class="fas fa-paw"></i> Kategori
+                                </a>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <a href="{{ route('admin.kategori-klinis.index') }}" class="btn btn-primary btn-block">
+                                    <i class="fas fa-paw"></i> Kategori Klinis
+                                </a>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <a href="{{ route('admin.kode-tindakan-terapi.index') }}" class="btn btn-primary btn-block">
+                                    <i class="fas fa-paw"></i> Kode Tindakan Terapi
+                                </a>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <a href="{{ route('admin.pet.index') }}" class="btn btn-primary btn-block">
+                                    <i class="fas fa-paw"></i> Pet
+                                </a>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <a href="{{ route('admin.ras-hewan.index') }}" class="btn btn-primary btn-block">
+                                    <i class="fas fa-paw"></i> Ras Hewan
+                                </a>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <a href="{{ route('admin.role.index') }}" class="btn btn-primary btn-block">
+                                    <i class="fas fa-paw"></i> Role
+                                </a>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <a href="{{ route('admin.role-user.index') }}" class="btn btn-primary btn-block">
+                                    <i class="fas fa-paw"></i> User Role
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

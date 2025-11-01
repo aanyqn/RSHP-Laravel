@@ -9,7 +9,7 @@
 <body>
         
     <nav class="navigation">
-        <a class="navigation-list" href="{{ route('home') }}"><p>HOME</p></a>
+        <a class="navigation-list" href="{{ route('sites.home') }}"><p>HOME</p></a>
         <a class="navigation-list" href="{{ route('struktur') }}"><p>STRUKTUR ORGANISASI</p></a></a>
         <a class="navigation-list" href="{{ route('layanan') }}"><p>LAYANAN UMUM</p></a></a>
         <a class="navigation-list" href="{{ route('visimisi') }}"><p>VISI MISI DAN TUJUAN</p></a>
