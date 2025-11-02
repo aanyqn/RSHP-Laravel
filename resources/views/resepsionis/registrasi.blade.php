@@ -19,13 +19,13 @@
                     <div class="mt-4">
                         <div class="row">
                             <div class="col-md-12 mb-2">
-                                <a href="{{ route('resepsionis.reservasi.index') }}" class="btn btn-primary btn-block">
-                                    <i class="fas fa-paw"></i> Reservasi
+                                <a href="{{ route('resepsionis.registrasi.pemilik.index') }}" class="btn btn-primary btn-block">
+                                    <i class="fas fa-paw"></i> Pemilik
                                 </a>
                             </div>
                             <div class="col-md-12 mb-2">
-                                <a href="{{ route ('resepsionis.registrasi') }}" class="btn btn-primary btn-block">
-                                    <i class="fas fa-paw"></i> Registrasi
+                                <a href="{{ route('resepsionis.registrasi.pet.index') }}" class="btn btn-primary btn-block">
+                                    <i class="fas fa-paw"></i> Pet
                                 </a>
                             </div>
                         </div>

@@ -15,15 +15,7 @@
                 <td>{{ $item->user->nama }}</td>
                 <td>{{ $item->user->email }}</td>
                 <td>{{ $item->role->nama_role }}</td>
-                    @if (!$item->status) 
-                    {
-                        <td>Tidak Aktif</td>
-                    }
-                    @else
-                    {
-                        <td>Aktif</td>
-                    }
-                    @endif
+                <td>{{ $item->status ? 'Aktif' : 'Tidak Aktif' }}</td>
             </tr>
         @endforeach
     </tbody>

@@ -19,10 +19,11 @@
                     <div class="mt-4">
                         <div class="row">
                             <div class="col-md-12 mb-2">
-                                <a href="{{ route('admin.jenis-hewan.index') }}" class="btn btn-primary btn-block">
-                                    <i class="fas fa-paw"></i> Jenis Hewan
+                                <a href="{{ route('pemilik.daftar-pet.index') }}" class="btn btn-primary btn-block">
+                                    <i class="fas fa-paw"></i> Pet saya
                                 </a>
                             </div>
+                            
                         </div>
                     </div>
                 </div>

@@ -17,4 +17,9 @@ class Pet extends Model
     {
         return $this->belongsTo(Pemilik::class, 'idpemilik', 'idpemilik');
     }
+    public function temuDokter()
+    {
+        return $this->hasMany(TemuDokter::class, 'idpet', 'idpet');
+    }
+    
 }

@@ -5,6 +5,8 @@ use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\isAdministrator;
+use App\Http\Middleware\isPemilik;
+use App\Http\Middleware\isResepsionis;
 
 
 Route::get('/cek-koneksi', [SiteController::class, 'cekKoneksi'])->name('site.cek-koneksi');
@@ -39,9 +41,18 @@ Route::middleware([isAdministrator::class])->group(function () {
     Route::get('/admin/dashboard', [App\Http\Controllers\Admin\DashboardAdminController::class, 'index'])->name('admin.dashboard-admin');
 });
 
-Route::middleware('isResepsionis')->group(function () {
+Route::middleware([isResepsionis::class])->group(function () {
     Route::get('/resepsionis/dashboard', [App\Http\Controllers\Resepsionis\DashboardResepsionisController::class, 'index'])->name('resepsionis.dashboard-resepsionis');
+    
+    Route::get('/resepsionis/reservasi', [App\Http\Controllers\Resepsionis\TemuDokterController::class, 'index'])->name('resepsionis.reservasi.index');
+
+    Route::get('/resepsionis/registrasi', function () { return view ('resepsionis.registrasi'); })->name('resepsionis.registrasi');
+    
+    Route::get('/resepsionis/registrasi/pemilik', [App\Http\Controllers\Resepsionis\RegistrasiPemilikController::class, 'index'])->name('resepsionis.registrasi.pemilik.index');
+
+    Route::get('/resepsionis/registrasi/pet', [App\Http\Controllers\Resepsionis\RegistrasiPetController::class, 'index'])->name('resepsionis.registrasi.pet.index');
 });
+
 
 Route::middleware('isDokter')->group(function () {
     Route::get('/dokter/dashboard', [App\Http\Controllers\Dokter\DashboardDokterController::class, 'index'])->name('dokter.dashboard-dokter');
@@ -51,8 +62,10 @@ Route::middleware('isPerawat')->group(function () {
     Route::get('/perawat/dashboard', [App\Http\Controllers\Perawat\DashboardPerawatController::class, 'index'])->name('perawat.dashboard-perawat');
 });
 
-Route::middleware('isPemilik')->group(function () {
+Route::middleware([isPemilik::class])->group(function () {
     Route::get('/pemilik/dashboard', [App\Http\Controllers\Pemilik\DashboardPemilikController::class, 'index'])->name('pemilik.dashboard-pemilik');
+
+    Route::get('/pemilik/daftar-pet', [App\Http\Controllers\Pemilik\DaftarPetController::class, 'index'])->name('pemilik.daftar-pet.index');
 });
 
 
