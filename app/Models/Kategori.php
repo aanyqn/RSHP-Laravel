@@ -8,6 +8,7 @@ class Kategori extends Model
     protected $table = 'kategori';
     protected $primaryKey = 'idkategori';
     protected $fillable = ['nama_kategori'];
+    public $timestamps = false;
     public function kodeTindakanTerapi()
     {
         return $this->hasOne(KodeTindakanTerapi::class, 'idkategori', 'idkategori');

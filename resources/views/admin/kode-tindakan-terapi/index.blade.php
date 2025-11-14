@@ -1,3 +1,12 @@
+<div class="mb-3">
+    <a href="{{ route('admin.dashboard-admin') }}" method="GET" style="displaye: inline;">
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Back
+        </button>
+    </a>
+</div>
+
+
 <table border="1" cellpadding="8" cellspacing="8">
     <thead>
         <tr>
