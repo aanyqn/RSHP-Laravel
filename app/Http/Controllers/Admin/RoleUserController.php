@@ -93,6 +93,33 @@ class RoleUserController extends Controller
         }
     }
 
+    public function edit($id)
+    {
+        $userInfo = \DB::table('user')->where('iduser', $id)->select('nama', 'email')->get();
+        $role = \DB::table('role')->select('idrole', 'nama_role')->get();
+        $roleUser = \DB::table('role_user')->where('iduser', $id)->select('idrole')->get();
+        return view('admin.role-user.edit', compact('id', 'role', 'roleUser','userInfo'));
+    }
+
+    public function update(Request $request)
+    {
+        $validatedData = $this->validateRole($request, $request['idrole']);
+        $jenisHewan = $this->updateRole($validatedData);
+        return redirect()->route('admin.role.index')
+                        ->with('success', 'Role berhasil ubah.');
+    }
+    protected function updateRole(array $data)
+    {
+        try {
+            $role = \DB::table('role')->where('idrole', $data['idrole'])->update([
+                'nama_role' => $this->formatNamaRole($data['nama_role'])
+            ]);
+            return $role;
+        } catch (\Exception $e) {
+            throw new \Exception(('Gagal menyimpan data role: ' . $e->getMessage()));
+        }
+    }
+
     protected function formatNama($nama)
     {
         return trim(ucwords(strtolower($nama)));

@@ -1,12 +1,12 @@
 @extends('layouts.lte.main')
-@section('title', 'Tambah Pemilik')
+@section('title', 'Edit Pemilik')
 @section('content')
 <div class="container m-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h4>Tambah Pet</h4>
+                    <h4>Edit Pet</h4>
                 </div>
                 <div class="card-body">
                     @if (session('error'))
@@ -15,9 +15,9 @@
                         </div>
                     @endif
                         {{-- ['nama', 'tanggal_lahir', 'warna_tanda', 'jenis_kelamin', 'idpemilik', 'idras_hewan'] --}}
-                    <form action="{{ route('admin.pet.store') }}" method="POST">
+                    <form action="{{ route('admin.pet.update') }}" method="POST">
                         @csrf
-
+                        <input type="hidden" value="{{ $id }}" name="idpet" required>
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama<span class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Masukkan nama" required>

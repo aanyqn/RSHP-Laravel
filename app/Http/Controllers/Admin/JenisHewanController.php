@@ -11,7 +11,7 @@ class JenisHewanController extends Controller
     public function index()
     {
         // $jenisHewan = JenisHewan::select('idjenis_hewan', 'nama_jenis_hewan')->get();
-        $jenisHewan = JenisHewan::all();
+        $jenisHewan = \DB::table('jenis_hewan')->select('idjenis_hewan', 'nama_jenis_hewan')->get();
         return view('admin.jenis-hewan.index', compact('jenisHewan'));
     }
 
@@ -31,8 +31,31 @@ class JenisHewanController extends Controller
     protected function validateJenisHewan(Request $request, $id = null)
     {
         $uniqueRule = $id ?
-            'unique:jenis_hewan,nama_jenis_hewan' . $id . ',idjenis_hewan' :
+            'unique:jenis_hewan,nama_jenis_hewan,' . $id . ',idjenis_hewan' :
             'unique:jenis_hewan,nama_jenis_hewan';
+
+        if($id != null) {
+            return $request->validate([
+            'nama_jenis_hewan' => [
+                'required',
+                'string',
+                'max:255',
+                'min:3',
+                $uniqueRule
+            ],
+            'idjenis_hewan' => [
+                'required',
+                'numeric'
+            ]
+
+        ], [
+            'nama_jenis_hewan.required' => 'Nama jenis hewan wajib diisi',
+            'nama_jenis_hewan.string' => 'Nama jenis hewan harus berupa teks',
+            'nama_jenis_hewan.max' => 'Nama jenis hewan max 255 karakter',
+            'nama_jenis_hewan.min' => 'Nama jenis hewan minimal 3 karakter',
+            'nama_jenis_hewan.unique' => 'Nama jenis hewan sudah ada',
+        ]);
+        }
 
         return $request->validate([
             'nama_jenis_hewan' => [
@@ -42,6 +65,7 @@ class JenisHewanController extends Controller
                 'min:3',
                 $uniqueRule
             ],
+
         ], [
             'nama_jenis_hewan.required' => 'Nama jenis hewan wajib diisi',
             'nama_jenis_hewan.string' => 'Nama jenis hewan harus berupa teks',
@@ -54,14 +78,37 @@ class JenisHewanController extends Controller
     protected function createJenisHewan(array $data)
     {
         try {
-            return JenisHewan::create([
-                'nama_jenis_hewan' => $this->formatNamaJenisHewan($data['nama_jenis_hewan']),
+            $jenisHewan = \DB::table('jenis_hewan')->insert([
+                'nama_jenis_hewan' => $this->formatNamaJenisHewan($data['nama_jenis_hewan'])
             ]);
+            return $jenisHewan;
         } catch (\Exception $e) {
             throw new \Exception(('Gagal menyimpan data jenis hewan: ' . $e->getMessage()));
         }
     }
+    public function edit($id)
+    {
+        return view('admin.jenis-hewan.edit', compact('id'));
+    }
 
+    public function update(Request $request)
+    {
+        $validatedData = $this->validateJenisHewan($request, $request['idjenis_hewan']);
+        $jenisHewan = $this->updateJenisHewan($validatedData);
+        return redirect()->route('admin.jenis-hewan.index')
+                        ->with('success', 'Jenis hewan berhasil ubah.');
+    }
+    protected function updateJenisHewan(array $data)
+    {
+        try {
+            $jenisHewan = \DB::table('jenis_hewan')->where('idjenis_hewan', $data['idjenis_hewan'])->update([
+                'nama_jenis_hewan' => $this->formatNamaJenisHewan($data['nama_jenis_hewan'])
+            ]);
+            return $jenisHewan;
+        } catch (\Exception $e) {
+            throw new \Exception(('Gagal menyimpan data jenis hewan: ' . $e->getMessage()));
+        }
+    }
     protected function formatNamaJenisHewan($nama)
     {
         return trim(ucwords(strtolower($nama)));

@@ -32,6 +32,24 @@ class RasHewanController extends Controller
 
     protected function validateRasHewan(Request $request, $id = null)
     {
+        if($id != null) {
+            return $request->validate([
+            'nama_ras' => [
+                'required',
+                'string',
+                'min:2',
+            ],
+            'idras_hewan' => [
+                'required',
+                'numeric',
+            ],
+        ], [
+            // 'email.required' => 'Email wajib diisi',
+            // 'email.email' => 'Email harus dengan format yang benar',
+            // 'email.unique' => 'Email sudah ada',
+
+        ]);
+        }
         return $request->validate([
             'nama_ras' => [
                 'required',
@@ -60,6 +78,32 @@ class RasHewanController extends Controller
             ]);
         } catch (\Exception $e) {
             throw new \Exception(('Gagal menyimpan data: ' . $e->getMessage()));
+        }
+    }
+
+    public function edit($id)
+    {
+        return view('admin.ras-hewan.edit', compact('id'));
+    }
+
+    public function update(Request $request)
+    {
+        $validatedData = $this->validateRasHewan($request, $request['idras_hewan']);
+        $jenisHewan = $this->updateRasHewan($validatedData);
+        return redirect()->route('admin.ras-hewan.index')
+                        ->with('success', 'Nama ras hewan berhasil ubah.');
+    }
+
+    protected function updateRasHewan(array $data)
+    {
+        try {
+            $rasHewan = \DB::table('ras_hewan')->where('idras_hewan', $data['idras_hewan'])->update([
+                'nama_ras' => $this->formatNama($data['nama_ras']),
+            ]);
+            
+        return $rasHewan;
+        } catch (\Exception $e) {
+            throw new \Exception(('Gagal menyimpan data ras hewan: ' . $e->getMessage()));
         }
     }
 
