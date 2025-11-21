@@ -1,15 +1,5 @@
 @extends('layouts.lte.main')
-@section('title', 'Tambah Jenis Hewan')
-
-@php
-$breadcrumbs = [
-    'Dashboard' => route('admin.dashboard-admin'),
-    'Jenis Hewan' => null,
-];
-@endphp
-
 @section('content')
-
 
 <div class="m-3">
     <a href="{{ route('admin.dashboard-admin') }}" method="GET" style="displaye: inline;">
@@ -39,14 +29,17 @@ $breadcrumbs = [
     </div>
 @endif
 <div class="card m-3">
-    <div class="card-header"><h3 class="card-title">Jenis Hewan</h3></div>
+    <div class="card-header"><h3 class="card-title">Daftar Rekam Medis</h3></div>
     <div class="card-body">
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th style="width: 10px">No</th>
-                <th>Jenis Hewan</th>
-                <th>Aksi</th>
+                <th>Nama hewan</th>
+                <th>Anamnesa</th>
+                <th>Temuan Klinis</th>
+                <th>Diagnosa</th>
+                <th>Dokter</th>
             </tr>
         </thead>
         <tbody>
@@ -63,10 +56,10 @@ $breadcrumbs = [
             </td>
             <td><span class="badge text-bg-danger">55%</span></td>
         </tr> --}}
-        @foreach ($jenisHewan as $index => $hewan)
+        @foreach ($rekamMedis as $index => $item)
             <tr class="align-middle">
                 <td>{{ $index + 1 }}</td>
-                <td>{{ $hewan->nama_jenis_hewan }}</td>
+                <td>{{ $hewan-> }}</td>
                 <td>
                     <a href="{{ route('admin.jenis-hewan.edit', $hewan->idjenis_hewan) }}">
                         <button type="button" class="btn btn-sm btn-primary" onclick="window.location='#'">

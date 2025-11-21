@@ -22,5 +22,9 @@ class RoleUser extends Model
     {
         return $this->hasMany(TemuDokter::class, 'idrole_user', 'idrole_user');
     }
+    public function rekamMedis()
+    {
+        return $this->hasMany(RekamMedis::class, 'dokter_pemeriksa', 'idrole_user');
+    }
 }
 

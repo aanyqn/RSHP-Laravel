@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pemilik;
+use App\Models\Pet;
 use App\Models\User;
 
 class PemilikController extends Controller
@@ -155,6 +156,18 @@ class PemilikController extends Controller
         } catch (\Exception $e) {
             throw new \Exception(('Gagal menyimpan data jenis hewan: ' . $e->getMessage()));
         }
+    }
+    protected function destroy($idpemilik, $iduser)
+    {
+        if (!Pemilik::where('idpemilik', $idpemilik)->exists()) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan.');
+        }
+        
+        Pet::where('idpemilik', $idpemilik)->delete();
+        Pemilik::where('idpemilik', $idpemilik)->delete();
+        User::where('iduser', $iduser)->delete();
+
+        return redirect()->back()->with('deleteSuccess', 'Data berhasil dihapus.');
     }
 
     protected function formatNama($nama)

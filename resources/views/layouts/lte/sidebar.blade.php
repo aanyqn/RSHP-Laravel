@@ -29,7 +29,7 @@
               data-accordion="false"
               id="navigation"
             >
-              <li class="nav-item menu-open">
+              <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon bi bi-speedometer"></i>
                   <p>
@@ -46,7 +46,7 @@
                 </ul>
               </li>
 
-              <li class="nav-item menu-open">
+              <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon bi bi-box-seam-fill"></i>
                   <p>
@@ -104,15 +104,21 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ route('admin.role-user.index') }}" class="nav-link">
+                    <a href="{{ route('admin.user.index') }}" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
                       <p>User</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('admin.role-user.index') }}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Manajemen Role User</p>
                     </a>
                   </li>
                 </ul>
               </li>
 
-              <li class="nav-item menu-open">
+              <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon bi bi-clipboard-fill"></i>
                   <p>

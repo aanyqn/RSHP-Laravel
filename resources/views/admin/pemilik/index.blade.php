@@ -8,7 +8,26 @@
         </button>
     </a>
 </div>
-
+@if (session('success'))
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Success!</strong>
+        <span class="block sm:inline">{{ session('success') }}</span>
+        
+        <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.style.display='none';">
+            <button>X</button>
+        </span>
+    </div>
+@endif
+@if (session('deleteSuccess'))
+    <div class="bg-red-100 border border-green-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Success!</strong>
+        <span class="block sm:inline">{{ session('deleteSuccess') }}</span>
+        
+        <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.style.display='none';">
+            <button>X</button>
+        </span>
+    </div>
+@endif
 <div class="card m-3">
     <div class="card-header"><h3 class="card-title">Pemilik</h3></div>
     <!-- /.card-header -->
@@ -39,7 +58,7 @@
                     <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Yakin ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $item->idpemilik }}').submit(); }">
                         <i class="fas fa-edit"></i>Hapus
                     </button>
-                    <form id="delete-form-{{ $item->idpemilik }}" action="#" method="POST" style="display: none;">
+                    <form id="delete-form-{{ $item->idpemilik }}" action="{{ route('admin.pemilik.delete', [$item->idpemilik, $item->user->iduser]) }}" method="POST" style="display: none;">
                         @csrf
                         @method('DELETE')
                     </form>

@@ -149,7 +149,16 @@ class PetController extends Controller
             throw new \Exception(('Gagal menyimpan data pet: ' . $e->getMessage()));
         }
     }
+    protected function destroy($id)
+    {
+        if (!Pet::where('idpet', $id)->exists()) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan.');
+        }
 
+        Pet::where('idpet', $id)->delete();
+
+        return redirect()->back()->with('deleteSuccess', 'Data berhasil dihapus.');
+    }
     protected function formatNama($nama)
     {
         return trim(ucwords(strtolower($nama)));

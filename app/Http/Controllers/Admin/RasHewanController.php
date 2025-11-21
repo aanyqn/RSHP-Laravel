@@ -106,7 +106,16 @@ class RasHewanController extends Controller
             throw new \Exception(('Gagal menyimpan data ras hewan: ' . $e->getMessage()));
         }
     }
+    protected function destroy($id)
+    {
+        if (!RasHewan::where('idras_hewan', $id)->exists()) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan.');
+        }
 
+        RasHewan::where('idras_hewan', $id)->delete();
+
+        return redirect()->back()->with('deleteSuccess', 'Data berhasil dihapus.');
+    }
     protected function formatNama($nama)
     {
         return trim(ucwords(strtolower($nama)));

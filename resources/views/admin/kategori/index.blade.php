@@ -8,20 +8,31 @@
         </button>
     </a>
 </div>
-
+@if (session('success'))
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Success!</strong>
+        <span class="block sm:inline">{{ session('success') }}</span>
+        
+        <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.style.display='none';">
+            <button>X</button>
+        </span>
+    </div>
+@endif
+@if (session('deleteSuccess'))
+    <div class="bg-red-100 border border-green-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Success!</strong>
+        <span class="block sm:inline">{{ session('deleteSuccess') }}</span>
+        
+        <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.style.display='none';">
+            <button>X</button>
+        </span>
+    </div>
+@endif
 <div class="card m-3">
     <div class="card-header"><h3 class="card-title">Kategori</h3></div>
     <!-- /.card-header -->
     <div class="card-body">
     <table class="table table-bordered">
-        {{-- <thead>
-        <tr>
-            <th style="width: 10px">#</th>
-            <th>Task</th>
-            <th>Progress</th>
-            <th style="width: 40px">Label</th>
-        </tr>
-        </thead> --}}
         <thead>
             <tr>
                 <th>No</th>
@@ -30,19 +41,6 @@
             </tr>
         </thead>
         <tbody>
-        {{-- <tr class="align-middle">
-            <td>1.</td>
-            <td>Update software</td>
-            <td>
-            <div class="progress progress-xs">
-                <div
-                class="progress-bar progress-bar-danger"
-                style="width: 55%"
-                ></div>
-            </div>
-            </td>
-            <td><span class="badge text-bg-danger">55%</span></td>
-        </tr> --}}
         @foreach ($kategori as $index => $item)
             <tr <tr class="align-middle">
                 <td>{{ $index + 1 }}</td>
@@ -57,7 +55,7 @@
                     <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Yakin ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $item->idkategori }}').submit(); }">
                         <i class="fas fa-edit"></i>Hapus
                     </button>
-                    <form id="delete-form-{{ $item->idkategori }}" action="#" method="POST" style="display: none;">
+                    <form id="delete-form-{{ $item->idkategori }}" action="{{ route('admin.kategori.delete', [$item->idkategori]) }}" method="POST" style="display: none;">
                         @csrf
                         @method('DELETE')
                     </form>

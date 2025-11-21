@@ -8,7 +8,24 @@
         </button>
     </a>
 </div>
-
+@if (session('success'))
+    <div class="bg-green-200 border border-green-300 text-green-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Success!</strong>
+        <span class="block sm:inline">{{ session('success') }}</span>
+        <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.style.display='none';">
+            <button>X</button>
+        </span>
+    </div>
+@endif
+@if (session('deleteSuccess'))
+    <div class="bg-red-200 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Success!</strong>
+        <span class="block sm:inline">{{ session('deleteSuccess') }}</span>
+        <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.style.display='none';">
+            <button>X</button>
+        </span>
+    </div>
+@endif
 <div class="card m-3">
     <div class="card-header"><h3 class="card-title">Role</h3></div>
     <!-- /.card-header -->
@@ -35,7 +52,7 @@
                     <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Yakin ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $role->idrole }}').submit(); }">
                         <i class="fas fa-edit"></i>Hapus
                     </button>
-                    <form id="delete-form-{{ $role->idrole }}" action="#" method="POST" style="display: none;">
+                    <form id="delete-form-{{ $role->idrole }}" action="{{ route('admin.role.delete', [$role->idrole]) }}" method="POST" style="display: none;">
                         @csrf
                         @method('DELETE')
                     </form>

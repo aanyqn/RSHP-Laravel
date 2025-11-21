@@ -9,73 +9,64 @@
     </a>
 </div>
 @if (session('success'))
-    <div class="bg-green-200 border border-green-300 text-green-700 px-4 py-3 rounded relative" role="alert">
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
         <strong class="font-bold">Success!</strong>
         <span class="block sm:inline">{{ session('success') }}</span>
+        
         <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.style.display='none';">
             <button>X</button>
         </span>
     </div>
 @endif
 @if (session('deleteSuccess'))
-    <div class="bg-red-200 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+    <div class="bg-red-100 border border-green-400 text-red-700 px-4 py-3 rounded relative" role="alert">
         <strong class="font-bold">Success!</strong>
         <span class="block sm:inline">{{ session('deleteSuccess') }}</span>
+        
         <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.style.display='none';">
             <button>X</button>
         </span>
     </div>
 @endif
 <div class="card m-3">
-    <div class="card-header"><h3 class="card-title">Ras Hewan</h3></div>
+    <div class="card-header"><h3 class="card-title">User</h3></div>
     <!-- /.card-header -->
     <div class="card-body">
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Jenis</th>
                 <th>No</th>
-                <th>Nama Ras</th>
+                <th>Nama</th>
+                <th>Email</th>
                 <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
-        @php
-            // $current = $ras->jenisHewan->idjenis_hewan;
-            $current = null;
-            $i = 1;
-        @endphp
-        @foreach ($groupedRasHewan as $index => $rasHewan)
-                @foreach ($rasHewan as $ras)
-                <tr>
-                    @if ($ras->jenisHewan->idjenis_hewan != $current)
-                        <td rowspan="{{ count($rasHewan) }}">
-                            {{ $ras->jenisHewan->nama_jenis_hewan }}
-                        </td>
-                    @endif
-                    <td>{{ $i }}</td>
-                    <td>{{ $ras->nama_ras }}</td>
-                    <td>
-                        <a href="{{ route('admin.ras-hewan.edit', $ras->idras_hewan) }}">
+        @foreach ($users as $index => $item)
+            <tr>
+                <td>{{ $index + 1 }}</td>
+                <td>{{ $item->nama }}</td>
+                <td>{{ $item->email }}</td>
+                <td>
+                    <a href="{{ route('admin.user.edit', $item->iduser) }}">
                         <button type="button" class="btn btn-sm btn-primary" onclick="window.location='#'">
                             <i class="fas fa-edit"></i>Edit
                         </button>
-                        </a>
-                            <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Yakin ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $ras->idras_hewan }}').submit(); }">
-                            <i class="fas fa-edit"></i>Hapus
+                    </a>
+                    <a href="{{ route('admin.user.edit', $item->iduser) }}">
+                        <button type="button" class="btn btn-sm btn-warning" onclick="window.location='#'">
+                            <i class="fas fa-edit"></i>Reset Password
                         </button>
-                            <form id="delete-form-{{ $ras->idras_hewan }}" action="{{ route('admin.ras-hewan.delete', [$ras->idras_hewan]) }}" method="POST" style="display: none;">
-                            @csrf
-                            @method('DELETE')
-                        </form>
-                    </td>
-                        @php
-                            $current = $ras->jenisHewan->idjenis_hewan;
-                            // $current = null;
-                            $i = $i + 1;
-                        @endphp
-                </tr> 
-                @endforeach
+                    </a>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Yakin ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $item->iduser }}').submit(); }">
+                        <i class="fas fa-edit"></i>Hapus
+                    </button>
+                    <form id="delete-form-{{ $item->iduser }}" action="{{ route('admin.user.delete', [$item->iduser]) }}" method="POST" style="display: none;">
+                        @csrf
+                        @method('DELETE')
+                    </form>
+                </td>
+            </tr>
         @endforeach
         </tbody>
     </table>
@@ -93,11 +84,10 @@
 </div>
 
 <div class="m-3">
-    <form action="{{ route('admin.ras-hewan.create') }}" method="GET" style="displaye: inline;">
+    <form action="{{ route('admin.pemilik.create') }}" method="GET" style="displaye: inline;">
         <button type="submit" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Tambah Ras
+            <i class="fas fa-plus"></i> Tambah User
         </button>
     </form>
 </div>
 @endsection
-

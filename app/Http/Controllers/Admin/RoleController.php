@@ -104,7 +104,16 @@ class RoleController extends Controller
             throw new \Exception(('Gagal menyimpan data role: ' . $e->getMessage()));
         }
     }
+    protected function destroy($id)
+    {
+        if (!Role::where('idrole', $id)->exists()) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan.');
+        }
 
+        Role::where('idrole', $id)->delete();
+
+        return redirect()->back()->with('deleteSuccess', 'Data berhasil dihapus.');
+    }
     protected function formatNamaRole($nama)
     {
         return trim(ucwords(strtolower($nama)));

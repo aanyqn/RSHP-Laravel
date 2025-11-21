@@ -86,12 +86,12 @@ class JenisHewanController extends Controller
             throw new \Exception(('Gagal menyimpan data jenis hewan: ' . $e->getMessage()));
         }
     }
-    public function edit($id)
+    protected function edit($id)
     {
         return view('admin.jenis-hewan.edit', compact('id'));
     }
 
-    public function update(Request $request)
+    protected function update(Request $request)
     {
         $validatedData = $this->validateJenisHewan($request, $request['idjenis_hewan']);
         $jenisHewan = $this->updateJenisHewan($validatedData);
@@ -109,6 +109,17 @@ class JenisHewanController extends Controller
             throw new \Exception(('Gagal menyimpan data jenis hewan: ' . $e->getMessage()));
         }
     }
+    protected function destroy($id)
+    {
+        if (!JenisHewan::where('idjenis_hewan', $id)->exists()) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan.');
+        }
+
+        JenisHewan::where('idjenis_hewan', $id)->delete();
+
+        return redirect()->back()->with('deleteSuccess', 'Data berhasil dihapus.');
+    }
+
     protected function formatNamaJenisHewan($nama)
     {
         return trim(ucwords(strtolower($nama)));

@@ -79,12 +79,12 @@ class KategoriController extends Controller
             throw new \Exception(('Gagal menyimpan data: ' . $e->getMessage()));
         }
     }
-    public function edit($id)
+    protected function edit($id)
     {
         return view('admin.kategori.edit', compact('id'));
     }
 
-    public function update(Request $request)
+    protected function update(Request $request)
     {
         $validatedData = $this->validateKategori($request, $request['idkategori']);
         $jenisHewan = $this->updateKategori($validatedData);
@@ -101,6 +101,16 @@ class KategoriController extends Controller
         } catch (\Exception $e) {
             throw new \Exception(('Gagal menyimpan data kateogri: ' . $e->getMessage()));
         }
+    }
+    protected function destroy($id)
+    {
+        if (!Kategori::where('idkategori', $id)->exists()) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan.');
+        }
+
+        Kategori::where('idkategori', $id)->delete();
+
+        return redirect()->back()->with('deleteSuccess', 'Data berhasil dihapus.');
     }
     protected function formatNamaKategori($nama)
     {
