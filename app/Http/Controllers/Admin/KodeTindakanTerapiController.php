@@ -65,7 +65,6 @@ class KodeTindakanTerapiController extends Controller
             return KodeTindakanTerapi::create([
                 'kode' => $this->formatKode($data['kode']),
                 'deskripsi_tindakan_terapi' => $data['deskripsi_tindakan_terapi'],
-
             ]);
         } catch (\Exception $e) {
             throw new \Exception(('Gagal menyimpan data: ' . $e->getMessage()));

@@ -1,22 +1,21 @@
 @extends('layouts.lte.main')
 @section('title', 'Tambah Jenis Hewan')
-
+@section('content')
 @php
 $breadcrumbs = [
     'Dashboard' => route('admin.dashboard-admin'),
     'Jenis Hewan' => null,
 ];
 @endphp
-
-@section('content')
-
-
-<div class="m-3">
-    <a href="{{ route('admin.dashboard-admin') }}" method="GET" style="displaye: inline;">
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Back
-        </button>
+<div class="d-flex justify-content-between m-3 mt-0">
+    <a href="{{ route('admin.dashboard-admin') }}" class="btn btn-primary">
+        <i class="fas fa-arrow-left"></i> Back
     </a>
+    <form action="{{ route('admin.jenis-hewan.create') }}" method="GET">
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Tambah Jenis Hewan
+        </button>
+    </form>
 </div>
 @if (session('success'))
     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">

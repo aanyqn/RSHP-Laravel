@@ -1,11 +1,15 @@
 @extends('layouts.lte.main')
+@section('title', 'Kode Tindakan Terapi')
 @section('content')
-
-<div class="m-3">
-    <a href="{{ route('admin.dashboard-admin') }}" method="GET" style="displaye: inline;">
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Back
-        </button>
+@php
+$breadcrumbs = [
+    'Dashboard' => route('admin.dashboard-admin'),
+    'Kode Tindakan Terapi' => null,
+];
+@endphp
+<div class="d-flex justify-content-between m-3 mt-0">
+    <a href="{{ route('admin.dashboard-admin') }}" class="btn btn-primary">
+        <i class="fas fa-arrow-left"></i> Back
     </a>
 </div>
 

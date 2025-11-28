@@ -1,12 +1,21 @@
 @extends('layouts.lte.main')
+@section('title', 'Manajemen Role User')
 @section('content')
-
-<div class="m-3">
-    <a href="{{ route('admin.dashboard-admin') }}" method="GET" style="displaye: inline;">
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Back
-        </button>
+@php
+$breadcrumbs = [
+    'Dashboard' => route('admin.dashboard-admin'),
+    'Manajemen Role User' => null,
+];
+@endphp
+<div class="d-flex justify-content-between m-3 mt-0">
+    <a href="{{ route('admin.dashboard-admin') }}" class="btn btn-primary">
+        <i class="fas fa-arrow-left"></i> Back
     </a>
+    <form action="{{ route('admin.role-user.create') }}" method="GET">
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Tambah User dan Role
+        </button>
+    </form>
 </div>
 
 <div class="card m-3">
@@ -46,16 +55,11 @@
                     <td>{{ $role->role->nama_role }}</td>
                     <td>{{ $role->status ? 'Aktif' : 'Tidak Aktif' }}</td>
                     <td class="text-center">
-                        <button type="button" class="btn btn-sm {{ $role->status ? 'btn-warning' : 'btn-primary' }}" onclick="window.location='#'">
-                            <i class="fas fa-edit"></i>{{ $role->status ? 'Nonaktifkan' : 'Aktifkan' }}
-                        </button>
-                            <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Yakin ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $role->idrole_user }}').submit(); }">
-                            <i class="fas fa-edit"></i>Hapus
-                        </button>
-                        <form id="delete-form-{{ $role->idrole_user }}" action="#" method="POST" style="display: none;">
-                            @csrf
-                            @method('DELETE')
-                        </form>
+                        <a href="{{ route('admin.role-user.activate-role', [$role->idrole_user, $role->status]) }}">
+                            <button type="button" class="btn btn-sm {{ $role->status ? 'btn-warning' : 'btn-primary' }}" onclick="window.location='#'">
+                                <i class="fas fa-edit"></i>{{ $role->status ? 'Nonaktifkan' : 'Aktifkan' }}
+                            </button>
+                        </a>
                     </td>
                     @if ($role->user->iduser != $current)
                     <td class="text-center" rowspan="{{ count($roleUser) }}">
@@ -89,11 +93,4 @@
     </div>
 </div>
 
-<div class="m-3">
-    <form action="{{ route('admin.role-user.create') }}" method="GET" style="displaye: inline;">
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Tambah User
-        </button>
-    </form>
-</div>
 @endsection

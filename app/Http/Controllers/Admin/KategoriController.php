@@ -29,7 +29,7 @@ class KategoriController extends Controller
     protected function validateKategori(Request $request, $id = null)
     {
         $uniqueRule = $id ?
-            'unique:kategori,nama_kategori' . $id . ',idkategori' :
+            'unique:kategori,nama_kategori,' . $id . ',idkategori' :
             'unique:kategori,nama_kategori';
 
         if($id != null) {
@@ -94,8 +94,8 @@ class KategoriController extends Controller
     protected function updateKategori(array $data)
     {
         try {
-            $kategori = \DB::table('kategori')->where('idkategoriS', $data['idkategori'])->update([
-                'nama_kategori' => $this->formatNamaJenisHewan($data['nama_kategori'])
+            $kategori = \DB::table('kategori')->where('idkategori', $data['idkategori'])->update([
+                'nama_kategori' => $this->formatNamaKategori($data['nama_kategori'])
             ]);
             return $kategori;
         } catch (\Exception $e) {

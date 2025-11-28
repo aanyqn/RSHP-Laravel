@@ -17,7 +17,7 @@ Route::get('/auth/login', [LoginController::class, 'showLoginForm'])->name('logi
 
 Route::post('/auth/login', [LoginController::class, 'login'])->name('login.post');
 
-Route::get('/auth/logout', [LoginController::class, 'logout'])->name('logout');
+Route::post('/', [LoginController::class, 'logout'])->name('logout');
 
 Auth::routes();
 
@@ -46,6 +46,8 @@ Route::middleware([isAdministrator::class])->group(function () {
     Route::get('/admin/kategori-klinis', [App\Http\Controllers\Admin\KategoriKlinisController::class, 'index'])->name('admin.kategori-klinis.index');
         Route::get('/admin/kategori-klinis/create', [App\Http\Controllers\Admin\KategoriKlinisController::class, 'create'])->name('admin.kategori-klinis.create');
         Route::post('/admin/kategori-klinis/store', [App\Http\Controllers\Admin\KategoriKlinisController::class, 'store'])->name('admin.kategori-klinis.store');
+        Route::get('/admin/kategori-klinis/edit/{id}', [App\Http\Controllers\Admin\KategoriKlinisController::class, 'edit'])->name('admin.kategori-klinis.edit');
+        Route::post('/admin/kategori-klinis/update', [App\Http\Controllers\Admin\KategoriKlinisController::class, 'update'])->name('admin.kategori-klinis.update');
 
     Route::get('/admin/kode-tindakan-terapi', [App\Http\Controllers\Admin\KodeTindakanTerapiController::class, 'index'])->name('admin.kode-tindakan-terapi.index');
 
@@ -67,6 +69,9 @@ Route::middleware([isAdministrator::class])->group(function () {
         Route::get('/admin/role-user/create', [App\Http\Controllers\Admin\RoleUserController::class, 'create'])->name('admin.role-user.create');
         Route::post('/admin/role-user/store', [App\Http\Controllers\Admin\RoleUserController::class, 'store'])->name('admin.role-user.store');
         Route::get('/admin/role-user/edit/{id}', [App\Http\Controllers\Admin\RoleUserController::class, 'edit'])->name('admin.role-user.edit');
+        Route::get('/admin/role-user/activate-role/{id}/{status}', [App\Http\Controllers\Admin\RoleUserController::class, 'activateRole'])->name('admin.role-user.activate-role');
+        Route::post('/admin/role-user/edit-role-user', [App\Http\Controllers\Admin\RoleUserController::class, 'editRoleUser'])->name('admin.role-user.edit-role-user');
+        Route::get('/admin/role-user/delete-role-user/{idrole_user}/{iduser}', [App\Http\Controllers\Admin\RoleUserController::class, 'DeleteRoleUser'])->name('admin.role-user.delete-role-user');
 
     Route::get('/admin/ras-hewan', [App\Http\Controllers\Admin\RasHewanController::class, 'index'])->name('admin.ras-hewan.index');
         Route::get('/admin/ras-hewan/create', [App\Http\Controllers\Admin\RasHewanController::class, 'create'])->name('admin.ras-hewan.create');
@@ -77,11 +82,20 @@ Route::middleware([isAdministrator::class])->group(function () {
 
     Route::get('/admin/user', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.user.index');
         Route::get('/admin/user/create', [App\Http\Controllers\Admin\UserController::class, 'create'])->name('admin.user.create');
-        
         Route::post('/admin/user/store', [App\Http\Controllers\Admin\UserController::class, 'store'])->name('admin.user.store');
         Route::get('/admin/user/edit/{id}', [App\Http\Controllers\Admin\UserController::class, 'edit'])->name('admin.user.edit');
         Route::post('/admin/user/update', [App\Http\Controllers\Admin\UserController::class, 'update'])->name('admin.user.update');
         Route::delete('/admin/user/delete/{id}', [App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('admin.user.delete');
+        Route::get('/admin/user/reset/{id}', [App\Http\Controllers\Admin\UserController::class, 'reset'])->name('admin.user.reset');
+        Route::post('/admin/user/reset-password', [App\Http\Controllers\Admin\UserController::class, 'resetPassword'])->name('admin.user.reset-password');
+
+    Route::get('/admin/rekam-medis', [App\Http\Controllers\Admin\RekamMedisController::class, 'index'])->name('admin.rekam-medis.index');
+        Route::get('/admin/rekam-medis/create', [App\Http\Controllers\Admin\RekamMedisController::class, 'create'])->name('admin.rekam-medis.create');
+
+    Route::get('/admin/temu-dokter', [App\Http\Controllers\Admin\TemuDokterController::class, 'index'])->name('admin.temu-dokter.index');
+        Route::get('/admin/temu-dokter/create', [App\Http\Controllers\Admin\TemuDokterController::class, 'create'])->name('admin.temu-dokter.create');
+        Route::get('/admin/temu-dokter/edit/{id}', [App\Http\Controllers\Admin\TemuDokterController::class, 'edit'])->name('admin.temu-dokter.edit');
+        Route::post('/admin/temu-dokter/store', [App\Http\Controllers\Admin\TemuDokterController::class, 'store'])->name('admin.temu-dokter.store');
 
     Route::get('/admin/dashboard', [App\Http\Controllers\Admin\DashboardAdminController::class, 'index'])->name('admin.dashboard-admin');
 });

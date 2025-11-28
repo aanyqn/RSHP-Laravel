@@ -147,4 +147,24 @@ class UserController extends Controller
     {
         return trim(ucwords(strtolower($nama)));
     }
+
+    public function reset($id) {
+        return view('admin.user.reset-password', compact('id'));
+    }
+
+    protected function resetPassword(Request $request) {
+        $request->validate([
+            'password' => [
+                'required', 
+                'min:3',
+            ],
+            'iduser' => [
+                'required',
+                'numeric'
+            ]
+        ]);
+        $hashed = \Hash::make($request->password);
+        User::where('iduser', $request->iduser)->update(['password' => $hashed]);
+        return redirect()->route('admin.user.index')->with('succes', 'Password berhasil direset');
+    }
 }

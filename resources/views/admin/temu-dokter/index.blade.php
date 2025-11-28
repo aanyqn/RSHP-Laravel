@@ -1,19 +1,19 @@
 @extends('layouts.lte.main')
-@section('title', 'User')
+@section('title', 'Temu Dokter')
 @section('content')
 @php
 $breadcrumbs = [
     'Dashboard' => route('admin.dashboard-admin'),
-    'User' => null,
+    'Temu Dokter' => null,
 ];
 @endphp
 <div class="d-flex justify-content-between m-3 mt-0">
     <a href="{{ route('admin.dashboard-admin') }}" class="btn btn-primary">
         <i class="fas fa-arrow-left"></i> Back
     </a>
-    <form action="{{ route('admin.user.create') }}" method="GET">
+    <form action="{{ route('admin.temu-dokter.create') }}" method="GET">
         <button type="submit" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Tambah User
+            <i class="fas fa-plus"></i> Buat reservasi baru
         </button>
     </form>
 </div>
@@ -38,42 +38,52 @@ $breadcrumbs = [
     </div>
 @endif
 <div class="card m-3">
-    <div class="card-header"><h3 class="card-title">User</h3></div>
-    <!-- /.card-header -->
+    <div class="card-header"><h3 class="card-title">Temu Dokter</h3></div>
     <div class="card-body">
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>No</th>
-                <th>Nama</th>
-                <th>Email</th>
+                <th>No. Antrian</th>
+                <th>Kode Reservasi</th>
+                <th>Nama Pet</th>
+                <th>Waktu Pendaftaran</th>
+                <th>Status</th>
+                <th>Dokter Pemeriksa</th>
                 <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
-        @foreach ($users as $index => $item)
-            <tr>
-                <td>{{ $index + 1 }}</td>
-                <td>{{ $item->nama }}</td>
-                <td>{{ $item->email }}</td>
+        {{-- <tr class="align-middle">
+            <td>1.</td>
+            <td>Update software</td>
+            <td>
+            <div class="progress progress-xs">
+                <div
+                class="progress-bar progress-bar-danger"
+                style="width: 55%"
+                ></div>
+            </div>
+            </td>
+            <td><span class="badge text-bg-danger">55%</span></td>
+        </tr> --}}
+        @foreach ($daftar_temu_dokter as $index => $temu_dokter)
+            <tr class="align-middle">
+                <td>{{ $temu_dokter->no_urut }}</td>
+                <td>{{ $temu_dokter->idreservasi_dokter }}</td>
+                <td>{{ $temu_dokter->nama }}</td>
+                <td>{{ $temu_dokter->waktu_daftar }}</td>
+                <td class="{{ $temu_dokter->status ? 'bg-success' : 'bg-danger' }}">
+                    <span class="text-white text-center">
+                        {{ $temu_dokter->status ? 'Selesai' : 'Belum' }}
+                    </span>
+                </td>
+                <td>{{ $temu_dokter->dokter }}</td>
                 <td>
-                    <a href="{{ route('admin.user.edit', $item->iduser) }}">
-                        <button type="button" class="btn btn-sm btn-primary" onclick="window.location='#'">
-                            <i class="fas fa-edit"></i>Edit
-                        </button>
-                    </a>
-                    <a href="{{ route('admin.user.reset', $item->iduser) }}">
+                    <a href="{{ route('admin.temu-dokter.edit', $temu_dokter->idreservasi_dokter) }}">
                         <button type="button" class="btn btn-sm btn-warning" onclick="window.location='#'">
-                            <i class="fas fa-edit"></i>Reset Password
+                            <i class="fas fa-edit"></i>Selesaikan
                         </button>
                     </a>
-                    <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Yakin ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $item->iduser }}').submit(); }">
-                        <i class="fas fa-edit"></i>Hapus
-                    </button>
-                    <form id="delete-form-{{ $item->iduser }}" action="{{ route('admin.user.delete', [$item->iduser]) }}" method="POST" style="display: none;">
-                        @csrf
-                        @method('DELETE')
-                    </form>
                 </td>
             </tr>
         @endforeach
@@ -93,10 +103,11 @@ $breadcrumbs = [
 </div>
 
 <div class="m-3">
-    <form action="{{ route('admin.pemilik.create') }}" method="GET" style="displaye: inline;">
+    <form action="{{ route('admin.jenis-hewan.create') }}" method="GET" style="displaye: inline;">
         <button type="submit" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Tambah User
+            <i class="fas fa-plus"></i> Tambah Jenis Hewan
         </button>
     </form>
 </div>
+
 @endsection

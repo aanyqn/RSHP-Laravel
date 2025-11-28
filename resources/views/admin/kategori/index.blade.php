@@ -1,11 +1,15 @@
 @extends('layouts.lte.main')
+@section('title', 'Kategori')
 @section('content')
-
-<div class="m-3">
-    <a href="{{ route('admin.dashboard-admin') }}" method="GET" style="displaye: inline;">
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Back
-        </button>
+@php
+$breadcrumbs = [
+    'Dashboard' => route('admin.dashboard-admin'),
+    'Kategori' => null,
+];
+@endphp
+<div class="d-flex justify-content-between m-3 mt-0">
+    <a href="{{ route('admin.dashboard-admin') }}" class="btn btn-primary">
+        <i class="fas fa-arrow-left"></i> Back
     </a>
 </div>
 @if (session('success'))
@@ -51,14 +55,6 @@
                             <i class="fas fa-edit"></i>Edit
                         </button>
                     </a>
-                    
-                    <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Yakin ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $item->idkategori }}').submit(); }">
-                        <i class="fas fa-edit"></i>Hapus
-                    </button>
-                    <form id="delete-form-{{ $item->idkategori }}" action="{{ route('admin.kategori.delete', [$item->idkategori]) }}" method="POST" style="display: none;">
-                        @csrf
-                        @method('DELETE')
-                    </form>
                 </td>
             </tr>
         @endforeach
@@ -75,14 +71,6 @@
         <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
     </ul>
     </div>
-</div>
-
-<div class="m-3">
-    <form action="{{ route('admin.kategori.create') }}" method="GET" style="displaye: inline;">
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Tambah Kategori
-        </button>
-    </form>
 </div>
 
 @endsection

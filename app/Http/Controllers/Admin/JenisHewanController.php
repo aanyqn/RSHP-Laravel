@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\JenisHewan;
+use App\Models\RasHewan;
 use Illuminate\Http\Request;
 
 class JenisHewanController extends Controller
@@ -114,10 +115,13 @@ class JenisHewanController extends Controller
         if (!JenisHewan::where('idjenis_hewan', $id)->exists()) {
             return redirect()->back()->with('error', 'Data tidak ditemukan.');
         }
-
-        JenisHewan::where('idjenis_hewan', $id)->delete();
-
-        return redirect()->back()->with('deleteSuccess', 'Data berhasil dihapus.');
+        try {
+            RasHewan::where('idjenis_hewan', $id)->delete();
+            JenisHewan::where('idjenis_hewan', $id)->delete();
+            return redirect()->back()->with('deleteSuccess', 'Data berhasil dihapus.');
+        } catch (\Exception $e) {
+            throw new \Exception(('Gagal menghapus data jenis hewan: ' . $e->getMessage()));
+        }
     }
 
     protected function formatNamaJenisHewan($nama)

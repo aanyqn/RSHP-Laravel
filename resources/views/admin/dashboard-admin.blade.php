@@ -148,7 +148,7 @@
               <!--end::Col-->
             </div>
             <!--end::Row-->
-            <!--begin::Row-->
+            {{-- <!--begin::Row-->
             <div class="row">
               <!-- Start col -->
               <div class="col-lg-7 connectedSortable">
@@ -434,7 +434,7 @@
               </div>
               <!-- /.Start col -->
             </div>
-            <!-- /.row (main row) -->
+            <!-- /.row (main row) --> --}}
           </div>
           <!--end::Container-->
         </div>

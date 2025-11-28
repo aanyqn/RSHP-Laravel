@@ -1,12 +1,21 @@
 @extends('layouts.lte.main')
+@section('title', 'Role')
 @section('content')
-
-<div class="m-3">
-    <a href="{{ route('admin.dashboard-admin') }}" method="GET" style="displaye: inline;">
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Back
-        </button>
+@php
+$breadcrumbs = [
+    'Dashboard' => route('admin.dashboard-admin'),
+    'Role' => null,
+];
+@endphp
+<div class="d-flex justify-content-between m-3 mt-0">
+    <a href="{{ route('admin.dashboard-admin') }}" class="btn btn-primary">
+        <i class="fas fa-arrow-left"></i> Back
     </a>
+    <form action="{{ route('admin.role.create') }}" method="GET">
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Tambah Role
+        </button>
+    </form>
 </div>
 @if (session('success'))
     <div class="bg-green-200 border border-green-300 text-green-700 px-4 py-3 rounded relative" role="alert">
@@ -72,13 +81,5 @@
         <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
     </ul>
     </div>
-</div>
-
-<div class="m-3">
-    <form action="{{ route('admin.role.create') }}" method="GET" style="displaye: inline;">
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Tambah Role
-        </button>
-    </form>
 </div>
 @endsection

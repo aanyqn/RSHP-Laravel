@@ -126,7 +126,8 @@ class PemilikController extends Controller
 
     public function edit($id)
     {
-        return view('admin.pemilik.edit', compact('id'));
+        $pemilik = Pemilik::with('user')->where('iduser', $id)->get();
+        return view('admin.pemilik.edit', compact('id', 'pemilik'));
     }
 
     public function update(Request $request)

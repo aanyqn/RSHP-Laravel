@@ -18,18 +18,44 @@ class KategoriKlinisController extends Controller
     {
         return view('admin.kategori-klinis.create');
     }
-     public function store(Request $request)
+    protected function edit($id)
     {
-        $validatedData = $this->validateKategoriKlinis($request);
-        $kategoriKlinis = $this->createKategoriKlinis($validatedData);
+        return view('admin.kategori-klinis.edit', compact('id'));
+    }
+    protected function update(Request $request)
+    {
+        $validatedData = $this->validateKategoriKlinis($request, $request['idkategori_klinis']);
+        $kategoriKlinis = $this->updateKategori($validatedData);
         return redirect()->route('admin.kategori-klinis.index')
-                        ->with('success', 'Kategori Klinis berhasil ditambahkan.');
+                        ->with('success', 'Kategori Klinis berhasil ubah.');
     }
     protected function validateKategoriKlinis(Request $request, $id = null)
     {
         $uniqueRule = $id ?
-            'unique:kategori_klinis,nama_kategori_klinis' . $id . ',idkategori' :
+            'unique:kategori_klinis,nama_kategori_klinis,' . $id . ',idkategori_klinis' :
             'unique:kategori_klinis,nama_kategori_klinis';
+
+        if($id != null) {
+            return $request->validate([
+            'nama_kategori_klinis' => [
+                'required',
+                'string',
+                'max:100',
+                'min:3',
+                $uniqueRule
+            ],
+            'idkategori_klinis' => [
+                'required',
+                'numeric'
+            ],
+        ], [
+            'nama_kategori_klinis.required' => 'Nama kategori wajib diisi',
+            'nama_kategori_klinis.string' => 'Nama kategori harus berupa teks',
+            'nama_kategori_klinis.max' => 'Nama kategori max 100 karakter',
+            'nama_kategori_klinis.min' => 'Nama kategori minimal 3 karakter',
+            'nama_kategori_klinis.unique' => 'Nama kategori sudah ada', 
+        ]);
+        }
 
         return $request->validate([
             'nama_kategori_klinis' => [
@@ -48,16 +74,18 @@ class KategoriKlinisController extends Controller
         ]);
     }
 
-    protected function createKategoriKlinis(array $data)
+    protected function updateKategori(array $data)
     {
         try {
-            return KategoriKlinis::create([
-                'nama_kategori_klinis' => $this->formatNamaKategoriKLinis($data['nama_kategori_klinis']),
+            $kategoriKlinis = \DB::table('kategori_klinis')->where('idkategori_klinis', $data['idkategori_klinis'])->update([
+                'nama_kategori_klinis' => $this->formatNamaKategoriKlinis($data['nama_kategori_klinis'])
             ]);
+            return $kategoriKlinis;
         } catch (\Exception $e) {
-            throw new \Exception(('Gagal menyimpan data: ' . $e->getMessage()));
+            throw new \Exception(('Gagal menyimpan data kateogri klinis: ' . $e->getMessage()));
         }
     }
+
 
     protected function formatNamaKategoriKlinis($nama)
     {

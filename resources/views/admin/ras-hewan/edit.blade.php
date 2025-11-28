@@ -1,6 +1,13 @@
 @extends('layouts.lte.main')
 @section('title', 'Edit Ras Hewan')
 @section('content')
+@php
+$breadcrumbs = [
+    'Dashboard' => route('admin.dashboard-admin'),
+    'Ras Hewan' => route('admin.ras-hewan.index'),
+    'Edit' => null,
+];
+@endphp
 <div class="container m-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -21,7 +28,7 @@
 
                         <div class="mb-3">
                             <label for="nama_ras" class="form-label">Nama Ras Hewan<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control @error('nama_ras') is-invalid @enderror" id="nama_ras" name="nama_ras" value="{{ old('nama_ras') }}" placeholder="Masukkan ras hewan baru" required>
+                            <input type="text" class="form-control @error('nama_ras') is-invalid @enderror" id="nama_ras" name="nama_ras" value="{{ $rasHewan[0]->nama_ras }}" placeholder="Masukkan ras hewan baru" required>
                             @error('nama_ras')
                                 <div class="invalid-feedback">
                                     {{ $message }}

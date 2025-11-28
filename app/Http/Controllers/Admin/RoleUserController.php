@@ -95,10 +95,14 @@ class RoleUserController extends Controller
 
     public function edit($id)
     {
-        $userInfo = \DB::table('user')->where('iduser', $id)->select('nama', 'email')->get();
-        $role = \DB::table('role')->select('idrole', 'nama_role')->get();
-        $roleUser = \DB::table('role_user')->where('iduser', $id)->select('idrole')->get();
-        return view('admin.role-user.edit', compact('id', 'role', 'roleUser','userInfo'));
+        $roles = \DB::table('role')
+                    ->whereNotIn('idrole', function ($query) use ($id) {
+                        $query->select('idrole')
+                            ->from('role_user')
+                            ->where('iduser', $id);
+                    })->get();
+        $roleUsers = \DB::table('role_user')->where('role_user.iduser', $id)->leftJoin('role', 'role_user.idrole', '=', 'role.idrole')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('user.*', 'role.*', 'role_user.*')->get();
+        return view('admin.role-user.edit', compact('id', 'roleUsers', 'roles'));
     }
 
     public function update(Request $request)
@@ -107,6 +111,43 @@ class RoleUserController extends Controller
         $jenisHewan = $this->updateRole($validatedData);
         return redirect()->route('admin.role.index')
                         ->with('success', 'Role berhasil ubah.');
+    }
+    public function EditRoleUser(Request $request) {
+        $uniqueRule = $request->iduser ?
+            'unique:user,email,' . $request->iduser . ',iduser' :
+            'unique:user,email';
+        $request->validate([
+            'nama' => [
+                'required',
+                'string',
+                'min:3',
+            ],
+            'email' => [
+                'required',
+                'email',
+                $uniqueRule
+            ],
+            'idrole' => [
+                'numeric'
+            ],
+            'iduser' => [
+                'numeric',
+                'required'
+            ]
+        ]);
+        if($request->filled('idrole')) {
+            \DB::table('role_user')->insert([
+                'idrole' => $request->idrole,
+                'iduser' => $request->iduser,
+                'status' => 0
+            ]);
+            return redirect()->route('admin.role-user.edit', [$request->iduser])->with('success', 'Sukses menambah role');
+        }
+        \DB::table('user')->where('iduser', $request->iduser)->update([
+                'nama' => $request->nama,
+                'email' => $request->email,
+        ]);
+        return redirect()->route('admin.role-user.index')->with('success', 'Sukses mengedit user');
     }
     protected function updateRole(array $data)
     {
@@ -123,5 +164,27 @@ class RoleUserController extends Controller
     protected function formatNama($nama)
     {
         return trim(ucwords(strtolower($nama)));
+    }
+
+    public function activateRole($id, $status) {
+        try {
+            if($status == 1) {
+                RoleUser::where('idrole_user', $id)->update(['status' => 0]);
+                return redirect()->route('admin.role-user.index')->with('succes', 'Status role berhasil diupdate');
+            }
+            RoleUser::where('idrole_user', $id)->update(['status' => 1]);
+            return redirect()->route('admin.role-user.index')->with('succes', 'Status role berhasil diupdate');
+        } catch (\Exception $e) {
+            throw new \Exception(('Gagal update role: ' . $e->getMessage()));
+        }
+    }
+    public function deleteRoleUser($idrole_user, $iduser) {
+        try {
+            \DB::table('role_user')->where('idrole_user', $idrole_user)->delete();
+            return redirect()->route('admin.role-user.edit', [$iduser])->with('success', 'Sukses menambah role');
+
+        } catch (\Exception $e) {
+            throw new \Exception(('Gagal delete role: ' . $e->getMessage()));
+        }
     }
 }

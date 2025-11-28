@@ -1,4 +1,4 @@
-<div class="breadcrumb-area mb-3">
+<div class="breadcrumb-area m-3">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb mt">
             @foreach ($breadcrumbs as $label => $url)

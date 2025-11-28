@@ -83,7 +83,8 @@ class RasHewanController extends Controller
 
     public function edit($id)
     {
-        return view('admin.ras-hewan.edit', compact('id'));
+        $rasHewan = RasHewan::where('idras_hewan', $id)->get();
+        return view('admin.ras-hewan.edit', compact('id', 'rasHewan'));
     }
 
     public function update(Request $request)

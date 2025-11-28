@@ -30,25 +30,15 @@
               id="navigation"
             >
               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon bi bi-speedometer"></i>
-                  <p>
-                    Dashboard
-                    <i class="nav-arrow bi bi-chevron-right"></i>
-                  </p>
+                <a href="{{ route('admin.dashboard-admin') }}" class="nav-link">
+                  <i class="nav-icon bi bi-house-fill"></i>
+                  <p>Dashboard</p>
                 </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="{{ route('admin.dashboard-admin') }}" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Statistics</p>
-                    </a>
-                </ul>
               </li>
 
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="nav-icon bi bi-box-seam-fill"></i>
+                  <i class="nav-icon bi bi-clipboard2-fill"></i>
                   <p>
                     Master Data
                     <i class="nav-arrow bi bi-chevron-right"></i>
@@ -120,17 +110,23 @@
 
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="nav-icon bi bi-clipboard-fill"></i>
+                  <i class="nav-icon bi bi-clipboard2-pulse"></i>
                   <p>
-                    Rekam Medis
+                    Record Data
                     <i class="nav-arrow bi bi-chevron-right"></i>
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.rekam-medis.index') }}" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
                       <p>Daftar Rekam Medis</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('admin.temu-dokter.index') }}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Temu Dokter</p>
                     </a>
                   </li>
                 </ul>

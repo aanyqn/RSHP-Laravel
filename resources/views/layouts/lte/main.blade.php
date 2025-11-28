@@ -14,11 +14,11 @@
       @include('layouts.lte.sidebar')
       <!--end::Sidebar-->
       <!--begin::App Main-->
-      @if (isset($breadcrumbs))
-        @include('layouts.lte.header', ['breadcrumbs' => $breadcrumbs])
-      @endif
 
       <main class="app-main">
+        @if (isset($breadcrumbs))
+          @include('layouts.lte.header', ['breadcrumbs' => $breadcrumbs])
+        @endif
         @yield('content')
       </main>
       <!--end::App Main-->

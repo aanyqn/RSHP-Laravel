@@ -1,6 +1,13 @@
 @extends('layouts.lte.main')
-@section('title', 'Tambah Pemilik')
+@section('title', 'Tambah Role User')
 @section('content')
+@php
+$breadcrumbs = [
+    'Dashboard' => route('admin.dashboard-admin'),
+    'Manajemen Role User' => route('admin.role-user.create'),
+    'Tambah' => null,
+];
+@endphp
 <div class="container m-5">
     <div class="row justify-content-center">
         <div class="col-md-8">

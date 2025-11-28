@@ -1,11 +1,15 @@
 @extends('layouts.lte.main')
+@section('title', 'Kategori Klinis')
 @section('content')
-
-<div class="m-3">
-    <a href="{{ route('admin.dashboard-admin') }}" method="GET" style="displaye: inline;">
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Back
-        </button>
+@php
+$breadcrumbs = [
+    'Dashboard' => route('admin.dashboard-admin'),
+    'Kategori Klinis' => null,
+];
+@endphp
+<div class="d-flex justify-content-between m-3 mt-0">
+    <a href="{{ route('admin.dashboard-admin') }}" class="btn btn-primary">
+        <i class="fas fa-arrow-left"></i> Back
     </a>
 </div>
 
@@ -27,16 +31,11 @@
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $item->nama_kategori_klinis }}</td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-primary" onclick="window.location='#'">
-                        <i class="fas fa-edit"></i>Edit
-                    </button>
-                    <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Yakin ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $item->idkategori_klinnis }}').submit(); }">
-                        <i class="fas fa-edit"></i>Hapus
-                    </button>
-                    <form id="delete-form-{{ $item->idkategori_klinnis }}" action="#" method="POST" style="display: none;">
-                        @csrf
-                        @method('DELETE')
-                    </form>
+                    <a href="{{ route('admin.kategori-klinis.edit', [$item->idkategori_klinis]) }}">
+                        <button type="button" class="btn btn-sm btn-primary" onclick="window.location='#'">
+                            <i class="fas fa-edit"></i>Edit
+                        </button>
+                    </a>
                 </td>
             </tr>
         @endforeach
@@ -54,14 +53,5 @@
     </ul>
     </div>
 </div>
-
-<div class="m-3">
-    <form action="{{ route('admin.kategori-klinis.create') }}" method="GET" style="displaye: inline;">
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Tambah Kategori Klinis
-        </button>
-    </form>
-</div>
-
 @endsection
 

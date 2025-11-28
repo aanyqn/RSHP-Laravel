@@ -1,19 +1,12 @@
 @extends('layouts.lte.main')
-@section('title', 'Edit Jenis Hewan')
+@section('title', 'Reset Password User')
 @section('content')
-@php
-    $breadcrumbs = [
-        'Dashboard' => route('admin.dashboard-admin'),
-        'Jenis Hewan' => route('admin.jenis-hewan.index'),
-        'Edit' => null,
-    ];
-@endphp
 <div class="container m-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h4>Edit Jenis Hewan</h4>
+                    <h4>Reset password</h4>
                 </div>
                 <div class="card-body">
                     @if (session('error'))
@@ -22,13 +15,14 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('admin.jenis-hewan.update') }}" method="POST">
+                    <form action="{{ route('admin.user.reset-password') }}" method="POST">
                         @csrf
-                        <input type="hidden" value="{{ $id }}" name="idjenis_hewan" required>
+                        <input type="hidden" value="{{ $id }}" name="iduser" required>
+
                         <div class="mb-3">
-                            <label for="nama_jenis_hewan" class="form-label">Nama Jenis Hewan<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control @error('nama_jenis_hewan') is-invalid @enderror" id="nama_jenis_hewan" name="nama_jenis_hewan" value="{{ old('nama_jenis_hewan') }}" placeholder="Masukkan nama jenis hewan baru" required>
-                            @error('nama_jenis_hewan')
+                            <label for="password" class="form-label">Password baru<span class="text-danger">*</span></label>
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Masukkan password baru" required>
+                            @error('password')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -36,7 +30,7 @@
                         </div>
 
                         <div class="d-flex justify-content-between">
-                            <a href="{{ route('admin.jenis-hewan.index') }}" class="btn btn-secondary">
+                            <a href="{{ route('admin.user.index') }}" class="btn btn-secondary">
                                 <i class="fas fa-arrow-left"></i> Kembali
                             </a>
                             <button type="submit" class="btn btn-primary">

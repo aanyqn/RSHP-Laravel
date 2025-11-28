@@ -1,6 +1,13 @@
 @extends('layouts.lte.main')
-@section('title', 'Tambah Pemilik')
+@section('title', 'Pemilik')
 @section('content')
+@php
+$breadcrumbs = [
+    'Dashboard' => route('admin.dashboard-admin'),
+    'Pemilik' => route('admin.pemilik.index'),
+    'Edit' => null,
+];
+@endphp
 <div class="container m-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -21,7 +28,7 @@
 
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Masukkan nama" required>
+                            <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ $pemilik[0]->user->nama }}" placeholder="Masukkan nama" required>
                             @error('nama')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -31,7 +38,7 @@
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="Masukkan email" required>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ $pemilik[0]->user->email }}" placeholder="Masukkan email" required>
                             @error('email')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -41,7 +48,7 @@
 
                         <div class="mb-3">
                             <label for="no_wa" class="form-label">No Whatsapp<span class="text-danger">*</span></label>
-                            <input type="number" class="form-control @error('no_wa') is-invalid @enderror" id="no_wa" name="no_wa" value="{{ old('no_wa') }}" placeholder="Masukkan no Whatsapp" required>
+                            <input type="number" class="form-control @error('no_wa') is-invalid @enderror" id="no_wa" name="no_wa" value="{{ $pemilik[0]->no_wa }}" placeholder="Masukkan no Whatsapp" required>
                             @error('no_wa')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -51,7 +58,7 @@
 
                         <div class="mb-3">
                             <label for="alamat" class="form-label">Alamat<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" value="{{ old('alamat') }}" placeholder="Masukkan alamat" required>
+                            <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" value="{{ $pemilik[0]->alamat }}"" placeholder="Masukkan alamat" required>
                             @error('alamat')
                                 <div class="invalid-feedback">
                                     {{ $message }}

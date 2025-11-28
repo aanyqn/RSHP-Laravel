@@ -1,6 +1,13 @@
 @extends('layouts.lte.main')
-@section('title', 'Edit Pemilik')
+@section('title', 'Edit Pet')
 @section('content')
+@php
+$breadcrumbs = [
+    'Dashboard' => route('admin.dashboard-admin'),
+    'Pet' => route('admin.pet.index'),
+    'Edit' => null,
+];
+@endphp
 <div class="container m-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -20,7 +27,7 @@
                         <input type="hidden" value="{{ $id }}" name="idpet" required>
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Masukkan nama" required>
+                            <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ $pet[0]->nama }}" placeholder="Masukkan nama" required>
                             @error('nama')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -30,7 +37,7 @@
 
                         <div class="mb-3">
                             <label for="tanggal_lahir" class="form-label">Tanggal lahir<span class="text-danger">*</span></label>
-                            <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror" id="tanggal_lahir" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}" required>
+                            <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror" id="tanggal_lahir" name="tanggal_lahir" value="{{ $pet[0]->tanggal_lahir }}" required>
                             @error('tanggal_lahir')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -40,7 +47,7 @@
 
                         <div class="mb-3">
                             <label for="warna_tanda" class="form-label">Warna<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control @error('warna_tanda') is-invalid @enderror" id="warna_tanda" name="warna_tanda" value="{{ old('warna_tanda') }}" placeholder="Masukkan Warna" required>
+                            <input type="text" class="form-control @error('warna_tanda') is-invalid @enderror" id="warna_tanda" name="warna_tanda" value="{{ $pet[0]->warna_tanda }}" placeholder="Masukkan Warna" required>
                             @error('warna_tanda')
                                 <div class="invalid-feedback">
                                     {{ $message }}

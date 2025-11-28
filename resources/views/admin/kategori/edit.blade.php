@@ -1,6 +1,13 @@
 @extends('layouts.lte.main')
 @section('title', 'Edit Kategori')
 @section('content')
+@php
+$breadcrumbs = [
+    'Dashboard' => route('admin.dashboard-admin'),
+    'Kategori' => route('admin.kategori.index'),
+    'Edit' => null,
+];
+@endphp
 <div class="container m-5">
     <div class="row justify-content-center">
         <div class="col-md-8">

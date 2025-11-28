@@ -121,7 +121,8 @@ class PetController extends Controller
     {
         $pemilik = Pemilik::with('user')->get();
         $ras = RasHewan::all();
-        return view('admin.pet.edit', compact('id', 'pemilik', 'ras'));
+        $pet = Pet::where('idpet', $id)->get();
+        return view('admin.pet.edit', compact('id', 'pemilik', 'ras', 'pet'));
     }
 
     public function update(Request $request)
