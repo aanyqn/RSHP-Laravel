@@ -1,73 +1,30 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+<div class="accordion" id="accordionExample">
+                      <div class="accordion-item">
+                        <h2 class="accordion-header">
+                          <button
+                            class="accordion-button"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne"
+                            aria-expanded="true"
+                            aria-controls="collapseOne"
+                          >
+                            Accordion Item #1
+                          </button>
+                        </h2>
+                        <div
+                          id="collapseOne"
+                          class="accordion-collapse collapse show"
+                          data-bs-parent="#accordionExample"
+                        >
+                          <div class="accordion-body">
+                            <strong>This is the first item's accordion body.</strong> It is shown by
+                            default, until the collapse plugin adds the appropriate classes that we
+                            use to style each element. These classes control the overall appearance,
+                            as well as the showing and hiding via CSS transitions. You can modify
+                            any of this with custom CSS or overriding our default variables. It's
+                            also worth noting that just about any HTML can go within the
+                            <code>.accordion-body</code>, though the transition does limit overflow.
+                          </div>
                         </div>
-                    @endif
-
-                    {{ __('You are logged in!') }} {{ session('user_role_name') }}
-
-                    <div class="mt-4">
-                        <div class="row">
-                            <div class="col-md-12 mb-2">
-                                <a href="{{ route('admin.jenis-hewan.index') }}" class="btn btn-primary btn-block">
-                                    <i class="fas fa-paw"></i> Jenis Hewan
-                                </a>
-                            </div>
-                            <div class="col-md-12 mb-2">
-                                <a href="{{ route('admin.pemilik.index') }}" class="btn btn-primary btn-block">
-                                    <i class="fas fa-paw"></i> Pemilik
-                                </a>
-                            </div>
-                            <div class="col-md-12 mb-2">
-                                <a href="{{ route('admin.kategori.index') }}" class="btn btn-primary btn-block">
-                                    <i class="fas fa-paw"></i> Kategori
-                                </a>
-                            </div>
-                            <div class="col-md-12 mb-2">
-                                <a href="{{ route('admin.kategori-klinis.index') }}" class="btn btn-primary btn-block">
-                                    <i class="fas fa-paw"></i> Kategori Klinis
-                                </a>
-                            </div>
-                            <div class="col-md-12 mb-2">
-                                <a href="{{ route('admin.kode-tindakan-terapi.index') }}" class="btn btn-primary btn-block">
-                                    <i class="fas fa-paw"></i> Kode Tindakan Terapi
-                                </a>
-                            </div>
-                            <div class="col-md-12 mb-2">
-                                <a href="{{ route('admin.pet.index') }}" class="btn btn-primary btn-block">
-                                    <i class="fas fa-paw"></i> Pet
-                                </a>
-                            </div>
-                            <div class="col-md-12 mb-2">
-                                <a href="{{ route('admin.ras-hewan.index') }}" class="btn btn-primary btn-block">
-                                    <i class="fas fa-paw"></i> Ras Hewan
-                                </a>
-                            </div>
-                            <div class="col-md-12 mb-2">
-                                <a href="{{ route('admin.role.index') }}" class="btn btn-primary btn-block">
-                                    <i class="fas fa-paw"></i> Role
-                                </a>
-                            </div>
-                            <div class="col-md-12 mb-2">
-                                <a href="{{ route('admin.role-user.index') }}" class="btn btn-primary btn-block">
-                                    <i class="fas fa-paw"></i> User Role
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+                      </div>

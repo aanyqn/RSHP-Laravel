@@ -37,6 +37,48 @@ $breadcrumbs = [
         </span>
     </div>
 @endif
+
+<div class="container-fluid">
+    <div class="alert alert-light mb-2">
+        <div class="row">
+            <form class="d-flex" role="search">
+                <input
+                    class="form-control me-2"
+                    type="search"
+                    name="search"
+                    placeholder="Cari nama pet atau dokter pemeriksa.."
+                    aria-label="Search"
+                />
+                <button class="btn btn-outline-primary me-2" type="submit">Search</button>
+                <select class="form-control me-2 @error('date') is-invalid @enderror" id="date" name="date" name="date">
+                    <option value="">
+                        Pilih berdasarkan waktu..
+                    </option>
+                    <option value="1" {{ request('date') == 1 ? 'selected' : ''}}>
+                        Hari ini
+                    </option>
+                    <option value="2" {{ request('date') == 2 ? 'selected' : ''}}>
+                        Kemarin
+                    </option>
+                    <option value="3" {{ request('date') == 3 ? 'selected' : ''}}>
+                        1 Minggu Terakhir
+                    </option>
+                    <option value="4" {{ request('date') == 4 ? 'selected' : ''}}>
+                        1 Bulan Terakhir
+                    </option>
+                    <option value="5" {{ request('date') == 5 ? 'selected' : ''}}>
+                        Semua
+                    </option>
+                </select>
+                <button class="btn btn-outline-primary me-2" type="submit">Filter</button>
+                <a href="{{ route('admin.temu-dokter.index') }}">
+                    <span class="btn btn-outline-danger">Reset</span>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="card m-3">
     <div class="card-header"><h3 class="card-title">Temu Dokter</h3></div>
     <div class="card-body">
@@ -72,18 +114,25 @@ $breadcrumbs = [
                 <td>{{ $temu_dokter->idreservasi_dokter }}</td>
                 <td>{{ $temu_dokter->nama }}</td>
                 <td>{{ $temu_dokter->waktu_daftar }}</td>
-                <td class="{{ $temu_dokter->status ? 'bg-success' : 'bg-danger' }}">
+                <td class="{{ $temu_dokter->status ? 'bg-danger' : 'bg-success' }}">
                     <span class="text-white text-center">
-                        {{ $temu_dokter->status ? 'Selesai' : 'Belum' }}
+                        {{ $temu_dokter->status ? 'Belum' : 'Selesai' }}
                     </span>
                 </td>
                 <td>{{ $temu_dokter->dokter }}</td>
                 <td>
-                    <a href="{{ route('admin.temu-dokter.edit', $temu_dokter->idreservasi_dokter) }}">
-                        <button type="button" class="btn btn-sm btn-warning" onclick="window.location='#'">
+                    <a href="{{ $temu_dokter->status ? route('admin.temu-dokter.update-status', $temu_dokter->idreservasi_dokter) : '#' }}">
+                        <button type="button" class="btn btn-sm btn-warning {{ $temu_dokter->status ? '' : 'disabled' }}" onclick="window.location='#'">
                             <i class="fas fa-edit"></i>Selesaikan
                         </button>
                     </a>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Yakin ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $temu_dokter->idreservasi_dokter }}').submit(); }">
+                        <i class="fas fa-edit"></i>Hapus
+                    </button>
+                    <form id="delete-form-{{ $temu_dokter->idreservasi_dokter }}" action="{{ route('admin.temu-dokter.delete', [$temu_dokter->idreservasi_dokter]) }}" method="POST" style="display: none;">
+                        @csrf
+                        @method('DELETE')
+                    </form>
                 </td>
             </tr>
         @endforeach

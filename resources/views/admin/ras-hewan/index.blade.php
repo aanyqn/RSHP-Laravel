@@ -35,24 +35,45 @@ $breadcrumbs = [
         </span>
     </div>
 @endif
+
+<div class="container-fluid">
+    <div class="alert alert-light mb-2">
+        <div class="row">
+            <form class="d-flex" role="search">
+                <input
+                    class="form-control me-2"
+                    type="search"
+                    name="search"
+                    placeholder="Cari nama jenis atau ras.."
+                    aria-label="Search"
+                />
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+                <a href="{{ route('admin.ras-hewan.index') }}">
+                    <button class="btn btn-outline-danger ms-2">Reset</button>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="card m-3">
     <div class="card-header"><h3 class="card-title">Ras Hewan</h3></div>
     <!-- /.card-header -->
     <div class="card-body">
-    <table class="table table-bordered">
+    <table class="table table-bordered table-fixed">
         <thead>
             <tr>
                 <th>Jenis</th>
-                <th>No</th>
+                {{-- <th>No</th> --}}
                 <th>Nama Ras</th>
-                <th>Aksi</th>
+                <th style="width: 130px">Aksi</th>
             </tr>
         </thead>
         <tbody>
         @php
             // $current = $ras->jenisHewan->idjenis_hewan;
             $current = null;
-            $i = 1;
+            // $i = 1;
         @endphp
         @foreach ($groupedRasHewan as $index => $rasHewan)
                 @foreach ($rasHewan as $ras)
@@ -62,9 +83,9 @@ $breadcrumbs = [
                             {{ $ras->jenisHewan->nama_jenis_hewan }}
                         </td>
                     @endif
-                    <td>{{ $i }}</td>
+                    {{-- <td>{{ $i }}</td> --}}
                     <td>{{ $ras->nama_ras }}</td>
-                    <td>
+                    <td class="text-center">
                         <a href="{{ route('admin.ras-hewan.edit', $ras->idras_hewan) }}">
                         <button type="button" class="btn btn-sm btn-primary" onclick="window.location='#'">
                             <i class="fas fa-edit"></i>Edit
@@ -81,7 +102,7 @@ $breadcrumbs = [
                         @php
                             $current = $ras->jenisHewan->idjenis_hewan;
                             // $current = null;
-                            $i = $i + 1;
+                            // $i = $i + 1;
                         @endphp
                 </tr> 
                 @endforeach

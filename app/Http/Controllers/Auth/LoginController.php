@@ -90,22 +90,22 @@ class LoginController extends Controller
 
         switch ($userRole) {
             case '1':
-                return view('admin.dashboard-admin')->with('success', 'Login berhasil');
+                return redirect()->route('admin.dashboard-admin')->with('success', 'Login berhasil');
             case '2':
-                return view('dokter.dashboard-dokter')->with('success', 'Login berhasil');
+                return redirect()->route('dokter.dashboard-dokter')->with('success', 'Login berhasil');
             case '3':
-                return view('perawat.dashboard-perawat')->with('success', 'Login berhasil');
+                return redirect()->route('perawat.dashboard-perawat')->with( 'success', 'Login berhasil');
             case '4':
-                return view('resepsionis.dashboard-resepsionis')->with('success', 'Login berhasil');
-            default:
-                return view('pemilik.dashboard-pemilik')->with('success', 'Login berhasil');
+                return redirect()->route('resepsionis.dashboard-resepsionis')->with('success', 'Login berhasil');
+            case '5':
+                return redirect()->route('pemilik.dashboard-pemilik')->with('success', 'Login berhasil');
         }
     }
 
     public function logout(Request $request)
     {
-        Auth::logout();
-        Auth::flush();
+        \Auth::logout();
+        \Session::flush();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

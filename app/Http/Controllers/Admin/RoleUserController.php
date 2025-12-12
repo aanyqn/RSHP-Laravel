@@ -10,10 +10,74 @@ use Illuminate\Http\Request;
 
 class RoleUserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $roleUser = RoleUser::with('role', 'user')->get();
-        $groupedRoleUser = $roleUser->groupBy('iduser');
+        $groupedRoleUser = \DB::table('user as u')
+                        ->leftJoin('role_user as ru', 'u.iduser', '=', 'ru.iduser')
+                        ->leftJoin('role as r', 'ru.idrole', '=', 'r.idrole')
+                        ->select(
+                            'u.iduser',
+                            'u.nama',
+                            'u.email',
+                            'r.idrole',
+                            'r.nama_role',
+                            'ru.status',
+                            'ru.idrole_user'
+                        )
+                        ->get()
+                        ->groupBy('iduser')
+                        ->map(function ($items) {
+                            return [
+                                'iduser' => $items->first()->iduser,
+                                'nama'   => $items->first()->nama,
+                                'email'  => $items->first()->email,
+                                'roles'  => $items->map(function ($role) {
+                                    return [
+                                        'idrole'     => $role->idrole,
+                                        'nama_role' => $role->nama_role,
+                                        'status'    => $role->status,
+                                        'idrole_user' => $role->idrole_user,
+                                    ];
+                                })->values()
+                            ];
+                        })
+                        ->values();
+
+        if($request->filled('search')){
+            $groupedRoleUser = \DB::table('user as u')
+                        ->whereLike('u.nama', '%' . $request->search . '%')
+                        ->orWhereLike('r.nama_role', '%' . $request->search . '%')
+                        ->leftJoin('role_user as ru', 'u.iduser', '=', 'ru.iduser')
+                        ->leftJoin('role as r', 'ru.idrole', '=', 'r.idrole')
+                        ->select(
+                            'u.iduser',
+                            'u.nama',
+                            'u.email',
+                            'r.idrole',
+                            'r.nama_role',
+                            'ru.status',
+                            'ru.idrole_user'
+                        )
+                        ->get()
+                        ->groupBy('iduser')
+                        ->map(function ($items) {
+                            return [
+                                'iduser' => $items->first()->iduser,
+                                'nama'   => $items->first()->nama,
+                                'email'  => $items->first()->email,
+                                'roles'  => $items->map(function ($role) {
+                                    return [
+                                        'idrole'     => $role->idrole,
+                                        'nama_role' => $role->nama_role,
+                                        'status'    => $role->status,
+                                        'idrole_user' => $role->idrole_user,
+                                    ];
+                                })->values()
+                            ];
+                        })
+                        ->values();
+        }
+        
         return view('admin.role-user.index', compact('groupedRoleUser'));
         // $roleUsers = RoleUser::with('role', 'user')->get();
         // return view('admin.role-user.index', compact('roleUsers'));
@@ -35,7 +99,7 @@ class RoleUserController extends Controller
     protected function validateUser(Request $request, $id = null)
     {
         $uniqueRule = $id ?
-            'unique:user,email,' . $id . ',email' :
+            'unique:user,email,' . $id . ',iduser' :
             'unique:user,email';
 
         return $request->validate([
@@ -101,7 +165,7 @@ class RoleUserController extends Controller
                             ->from('role_user')
                             ->where('iduser', $id);
                     })->get();
-        $roleUsers = \DB::table('role_user')->where('role_user.iduser', $id)->leftJoin('role', 'role_user.idrole', '=', 'role.idrole')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('user.*', 'role.*', 'role_user.*')->get();
+        $roleUsers = \DB::table('user')->where('user.iduser', $id)->leftJoin('role_user', 'user.iduser', '=', 'role_user.iduser')->leftJoin('role', 'role_user.idrole', '=', 'role.idrole')->select('user.nama','user.email','user.iduser', 'role.idrole', 'role.nama_role', 'role_user.idrole_user', 'role_user.status')->get();
         return view('admin.role-user.edit', compact('id', 'roleUsers', 'roles'));
     }
 
@@ -126,9 +190,6 @@ class RoleUserController extends Controller
                 'required',
                 'email',
                 $uniqueRule
-            ],
-            'idrole' => [
-                'numeric'
             ],
             'iduser' => [
                 'numeric',

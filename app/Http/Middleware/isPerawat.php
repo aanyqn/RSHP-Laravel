@@ -22,7 +22,7 @@ class isPerawat
 
         $userRole = session('user_role');
 
-        if ($userRole === 1) {
+        if ($userRole === 3) {
             return $next($request);
         } else {
             return back()->with('Error', 'Akses ditolak');

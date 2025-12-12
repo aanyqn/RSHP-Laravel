@@ -37,14 +37,35 @@ $breadcrumbs = [
         </span>
     </div>
 @endif
+
+<div class="container-fluid">
+    <div class="alert alert-light mb-2">
+        <div class="row">
+            <form class="d-flex" role="search">
+                <input
+                    class="form-control me-2"
+                    type="search"
+                    name="search"
+                    placeholder="Cari nama atau nomor WA.."
+                    aria-label="Search"
+                />
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+                <a href="{{ route('admin.pemilik.index') }}">
+                    <button class="btn btn-outline-danger ms-2">Reset</button>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="card m-3">
     <div class="card-header"><h3 class="card-title">Pemilik</h3></div>
     <!-- /.card-header -->
     <div class="card-body">
-    <table class="table table-bordered">
+    <table class="table table-bordered table-fixed">
         <thead>
             <tr>
-                <th>No</th>
+                <th style="width: 50px;">No</th>
                 <th>Nama Pemilik</th>
                 <th>No WA</th>
                 <th>Alamat</th>

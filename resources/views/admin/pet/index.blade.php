@@ -35,6 +35,27 @@ $breadcrumbs = [
         </span>
     </div>
 @endif
+
+<div class="container-fluid">
+    <div class="alert alert-light mb-2">
+        <div class="row">
+            <form class="d-flex" role="search">
+                <input
+                    class="form-control me-2"
+                    type="search"
+                    name="search"
+                    placeholder="Cari nama pet atau pemilik.."
+                    aria-label="Search"
+                />
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+                <a href="{{ route('admin.pet.index') }}">
+                    <button class="btn btn-outline-danger ms-2">Reset</button>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="card m-3">
     <div class="card-header"><h3 class="card-title">Pet</h3></div>
     <!-- /.card-header -->

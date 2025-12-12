@@ -11,9 +11,14 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $users = User::all();
+        if ($request->filled('search')) {
+            $users = User::whereLike('nama', '%' . $request->search . '%')
+                            ->orWhereLike('email', '%' . $request->search . '%')
+                            ->get();
+        }
         return view('admin.user.index', compact('users'));
     }
     public function create()
@@ -32,7 +37,7 @@ class UserController extends Controller
     protected function validateUser(Request $request, $id = null)
     {
         $uniqueRule = $id ?
-            'unique:user,email,' . $id . ',email' :
+            'unique:user,email,' . $id . ',iduser' :
             'unique:user,email';
 
         if($id != null) {

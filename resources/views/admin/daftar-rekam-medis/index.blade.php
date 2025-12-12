@@ -37,14 +37,75 @@ $breadcrumbs = [
         </span>
     </div>
 @endif
+
+<div class="container-fluid">
+    <div class="alert alert-light mb-2">
+        <div class="row">
+            <form class="d-flex" role="search">
+                <input
+                    class="form-control me-2"
+                    type="search"
+                    name="search"
+                    placeholder="Cari nama pet atau dokter pemeriksa.."
+                    aria-label="Search"
+                />
+                <button class="btn btn-outline-primary me-2" type="submit">Search</button>
+                <select class="form-control me-2 @error('date') is-invalid @enderror" id="date" name="date" name="date">
+                    <option value="">
+                        Pilih berdasarkan waktu..
+                    </option>
+                    <option value="1" {{ request('date') == 1 ? 'selected' : ''}}>
+                        Hari ini
+                    </option>
+                    <option value="2" {{ request('date') == 2 ? 'selected' : ''}}>
+                        1 Minggu terakhir
+                    </option>
+                    <option value="3" {{ request('date') == 3 ? 'selected' : ''}}>
+                        1 Bulan terakhir
+                    </option>
+                    <option value="4" {{ request('date') == 4 ? 'selected' : ''}}>
+                        3 Bulan Terakhir
+                    </option>
+                    <option value="5" {{ request('date') == 5 ? 'selected' : ''}}>
+                        Semua
+                    </option>
+                </select>
+                <button class="btn btn-outline-primary me-2" type="submit">Filter</button>
+                <a href="{{ route('admin.rekam-medis.index') }}">
+                    <span class="btn btn-outline-danger">Reset</span>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
 @forelse($daftarRekamMedis as $index => $rekamMedis)
 <div class="card m-4">
-    <div class="card-header">
-    <h3 class="card-title">Rekam Medis : {{ $index + 1 }}</h3>
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3 class="card-title">Rekam Medis : {{ $index + 1 }}</h3>
+        <div class="d-flex gap-2">
+            <a href="{{ route('admin.rekam-medis.detail.create', [$rekamMedis->idrekam_medis]) }}">
+                <button type="button" class="btn btn-sm btn-primary" onclick="window.location='#'">
+                    <i class="fas fa-edit"></i>Tambah Aksi
+                </button>
+            </a>
+            <a href="{{ route('admin.rekam-medis.detail.index', [$rekamMedis->idrekam_medis]) }}">
+                <button type="button" class="btn btn-sm btn-success" onclick="window.location='#'">
+                    <i class="fas fa-edit"></i>Detail
+                </button>
+            </a>
+            <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Yakin ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $rekamMedis->idrekam_medis }}').submit(); }">
+                <i class="fas fa-edit"></i>Hapus
+            </button>
+            <form id="delete-form-{{ $rekamMedis->idrekam_medis }}" action="{{ route('admin.rekam-medis.delete', [$rekamMedis->idrekam_medis]) }}" method="POST" style="display: none;">
+                @csrf
+                @method('DELETE')
+            </form> 
+        </div>
     </div>
     <!-- /.card-header -->
     <div class="card-body p-0">
-    <table class="table table-striped">
+    <table class="table table-striped table-fixed">
         <tbody>
             <tr>
                 <th>Nama Peliharaan :</th>
@@ -70,22 +131,26 @@ $breadcrumbs = [
                 <th>Dokter Pemeriksa :</th>
                 <td>{{ $rekamMedis->dokter }}</td>
             </tr>
+            <tr>
+                <th>Tanggal Rekaman :</th>
+                <td>{{ $rekamMedis->created_at }}</td>
+            </tr>
         </tbody>
     </table>
     </div>
     <!-- /.card-body -->
 </div>
 @empty
-<div class="card mb-4">
+<div class="card m-4">
     <div class="card-header">
-    <h3 class="card-title">Rekam Medis : {{ $index + 1 }}</h3>
+    <h3 class="card-title">Rekam Medis : </h3>
     </div>
     <!-- /.card-header -->
     <div class="card-body p-0">
     <table class="table table-striped">
         <tbody>
             <tr>
-                <td>Tidak ada data</td>
+                <td>{{ request('search') != null ? 'Data tidak ditemukan' : 'Tidak ada rekam medis hari ini' }}</td>
             </tr>
         </tbody>
     </table>

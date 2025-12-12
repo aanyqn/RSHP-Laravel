@@ -10,9 +10,21 @@ use Illuminate\Http\Request;
 
 class PetController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $pets = Pet::with('pemilik', 'rasHewan')->get();
+        if ($request->filled('search')) {
+            $pets = Pet::with('pemilik', 'rasHewan')
+            ->whereLike('nama', '%' . $request->search . '%')
+            ->orWhereHas('pemilik', function($q) use($request)
+            {
+                $q->whereHas('user', function($qu) use($request)
+                {
+                    $qu->whereLike('nama', '%' . $request->search . '%');
+                });
+            })
+            ->get();
+        }
         return view('admin.pet.index', compact('pets'));
     }
     public function create()

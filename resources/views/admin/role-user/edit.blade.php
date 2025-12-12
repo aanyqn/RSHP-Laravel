@@ -48,7 +48,8 @@ $breadcrumbs = [
                         <div class="mb-4">
                             <label class="form-label">Daftar Role Pengguna</label>
                             <ul class="list-group">
-                                @forelse($roleUsers as $roleUser)
+                                @if ($roleUsers[0]->idrole_user != null)
+                                    @foreach($roleUsers as $roleUser)
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <span class="fw-bold">
                                             <i class="fas fa-user-tag text-muted mr-2"></i> {{ $roleUser->nama_role }}
@@ -62,11 +63,12 @@ $breadcrumbs = [
                                             </span>
                                         </a>
                                     </li>
-                                @empty
+                                    @endforeach
+                                @else
                                     <li class="list-group-item text-center text-muted">
                                         <i class="fas fa-exclamation-circle"></i> Tidak ada role yang terdaftar
                                     </li>
-                                @endforelse
+                                @endif
                             </ul>
                         </div>
 
@@ -97,8 +99,8 @@ $breadcrumbs = [
                             <div class="mb-3 row">
                                 <div class="col-md-10">
                                     {{-- <input type="text" class="form-control @error('idrole') is-invalid @enderror" id="idrole" name="idrole" value="{{ old('idrole') }}" placeholder="Masukkan no Whatsapp" required> --}}
-                                    <select class="form-control @error('idrole') is-invalid @enderror" id="idrole" name="idrole" name="idrole">
-                                        <option>
+                                    <select class="form-control @error('idrole') is-invalid @enderror" id="idrole" name="idrole">
+                                        <option value="">
                                             Pilih Role..
                                         </option>
                                         @forelse ($roles as $item)

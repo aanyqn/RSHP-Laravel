@@ -14,5 +14,8 @@ class RekamMedis extends Model
     {
         return $this->belongsTo(RoleUser::class, 'idrole_user', 'dokter_pemeriksa');
     }
-
+    public function detailRekamMedis()
+    {
+        return $this->hasMany(DetailRekamMedis::class, 'idrekam_medis', 'idrekam_medis');
+    }
 }

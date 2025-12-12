@@ -37,14 +37,36 @@ $breadcrumbs = [
         </span>
     </div>
 @endif
+
+<div class="container-fluid">
+    <div class="alert alert-light mb-2">
+        <div class="row">
+            <form class="d-flex" role="search">
+                <input
+                    class="form-control me-2"
+                    type="search"
+                    name="search"
+                    placeholder="Cari nama atau email.."
+                    aria-label="Search"
+                />
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+                <a href="{{ route('admin.user.index') }}">
+                    <button class="btn btn-outline-danger ms-2">Reset</button>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <div class="card m-3">
     <div class="card-header"><h3 class="card-title">User</h3></div>
     <!-- /.card-header -->
     <div class="card-body">
-    <table class="table table-bordered">
+    <table class="table table-bordered table-fixed">
         <thead>
             <tr>
-                <th>No</th>
+                <th style="width: 50px">No</th>
                 <th>Nama</th>
                 <th>Email</th>
                 <th>Aksi</th>
@@ -56,7 +78,7 @@ $breadcrumbs = [
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $item->nama }}</td>
                 <td>{{ $item->email }}</td>
-                <td>
+                <td class="text-center">
                     <a href="{{ route('admin.user.edit', $item->iduser) }}">
                         <button type="button" class="btn btn-sm btn-primary" onclick="window.location='#'">
                             <i class="fas fa-edit"></i>Edit

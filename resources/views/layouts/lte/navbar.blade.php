@@ -154,7 +154,7 @@
                   class="user-image rounded-circle shadow"
                   alt="User Image"
                 />
-                <span class="d-none d-md-inline">Ainul Yaqin</span>
+                <span class="d-none d-md-inline">{{ session('user_name') }}</span>
               </a>
               <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                 <!--begin::User Image-->
@@ -165,8 +165,8 @@
                     alt="User Image"
                   />
                   <p>
-                    Ainul Yaqin - Web Developer
-                    <small>Member since Nov. 2024</small>
+                    {{ session('user_name') }} - {{ session('user_role_name') }}
+                    <small>{{ session('user_email') }}</small>
                   </p>
                 </li>
                 <!--end::User Image-->
@@ -183,8 +183,14 @@
                 <!--end::Menu Body-->
                 <!--begin::Menu Footer-->
                 <li class="user-footer">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                  <a href="{{ route('logout') }}" class="btn btn-default btn-flat float-end">Logout</a>
+                  <a href="#" class="btn btn-default btn-flat d-inline-flex">Profile</a>
+                  <form action="{{ route('logout') }}" method="POST" class="d-inline-flex">
+                      @csrf
+                      <button type="submit" class="btn">
+                          <i class="fas fa-sign-out-alt"></i>Logout
+                      </button>
+                  </form>
+
                 </li>
                 <!--end::Menu Footer-->
               </ul>

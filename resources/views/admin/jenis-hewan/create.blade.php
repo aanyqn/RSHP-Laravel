@@ -24,7 +24,6 @@
 
                     <form action="{{ route('admin.jenis-hewan.store') }}" method="POST">
                         @csrf
-
                         <div class="mb-3">
                             <label for="nama_jenis_hewan" class="form-label">Nama Jenis Hewan<span class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('nama_jenis_hewan') is-invalid @enderror" id="nama_jenis_hewan" name="nama_jenis_hewan" value="{{ old('nama_jenis_hewan') }}" placeholder="Masukkan nama jenis hewan" required>

@@ -37,13 +37,34 @@ $breadcrumbs = [
         </span>
     </div>
 @endif
+<div class="container-fluid">
+    <div class="alert alert-light mb-2">
+        <div class="row">
+            <form class="d-flex" role="search">
+                <input
+                    class="form-control me-2"
+                    type="search"
+                    name="search"
+                    placeholder="Cari nama jenis.."
+                    aria-label="Search"
+                />
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+                <a href="{{ route('admin.jenis-hewan.index') }}">
+                    <button class="btn btn-outline-danger ms-2">Reset</button>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <div class="card m-3">
     <div class="card-header"><h3 class="card-title">Jenis Hewan</h3></div>
     <div class="card-body">
-    <table class="table table-bordered">
+    <table class="table table-bordered table-fixed">
         <thead>
             <tr>
-                <th style="width: 10px">No</th>
+                <th style="width: 50px">No</th>
                 <th>Jenis Hewan</th>
                 <th>Aksi</th>
             </tr>
@@ -96,14 +117,6 @@ $breadcrumbs = [
         <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
     </ul>
     </div>
-</div>
-
-<div class="m-3">
-    <form action="{{ route('admin.jenis-hewan.create') }}" method="GET" style="displaye: inline;">
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Tambah Jenis Hewan
-        </button>
-    </form>
 </div>
 
 @endsection

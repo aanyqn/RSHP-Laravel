@@ -10,9 +10,18 @@ use App\Models\User;
 
 class PemilikController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $pemilik = Pemilik::with('user')->get();
+        if($request->filled('search')) {
+            $pemilik = Pemilik::with('user')
+                        ->whereHas('user', function ($q) use ($request)
+                        {
+                            $q->whereLike('nama', '%' . $request->search . '%');
+                        })
+                        ->orWhereLike('no_wa', '%' . $request->search . '%')
+                        ->get();
+        }
         return view('admin.pemilik.index', compact('pemilik'));
     }
 
@@ -32,7 +41,7 @@ class PemilikController extends Controller
     protected function validatePemilik(Request $request, $id = null)
     {
         $uniqueRule = $id ?
-            'unique:user,email,' . $id . ',email' :
+            'unique:user,email,' . $id . ',iduser' :
             'unique:user,email';
 
         if($id != null) {
@@ -112,6 +121,12 @@ class PemilikController extends Controller
             $pemilik = $user->pemilik()->create([
                 'alamat' => $data['alamat'],
                 'no_wa' => $data['no_wa'],
+            ]);
+            $iduser = \DB::table('user')->where('email', $data['email'])->select('iduser')->get();
+            $set_role = \DB::table('role_user')->insert([
+                'iduser' => $iduser->iduser,
+                'idrole' => 5,
+                'status' => 1,
             ]);
             
         return [

@@ -9,10 +9,13 @@ use Illuminate\Http\Request;
 
 class JenisHewanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // $jenisHewan = JenisHewan::select('idjenis_hewan', 'nama_jenis_hewan')->get();
         $jenisHewan = \DB::table('jenis_hewan')->select('idjenis_hewan', 'nama_jenis_hewan')->get();
+        if ($request->filled('search')) {
+                $jenisHewan = \DB::table('jenis_hewan')->whereLike('nama_jenis_hewan', '%' . $request->search . '%')->select('idjenis_hewan', 'nama_jenis_hewan')->get();
+        }
         return view('admin.jenis-hewan.index', compact('jenisHewan'));
     }
 

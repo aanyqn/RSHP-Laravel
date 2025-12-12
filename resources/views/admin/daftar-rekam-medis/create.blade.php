@@ -22,7 +22,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('admin.temu-dokter.store') }}" method="POST">
+                    <form action="{{ route('admin.rekam-medis.store') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label for="idreservasi_dokter" class="form-label">Reservasi<span class="text-danger">*</span></label>
@@ -32,12 +32,9 @@
                                     Pilih berdasarkan kode reservasi..
                                 </option>
                                 @forelse ($reservasi as $item)
-                                <option value="{{ $item->idreservasi_dokter }}">
+                                <option value="{{ $item->idreservasi_dokter }}" data-dokter="{{ $item->dokter }}" id-dokter="{{ $item->idrole_user }}">
                                     {{ $item->nama }}
                                 </option>
-                                @php
-                                $dokter = $item->dokter;
-                                @endphp
                                 @empty
                                 <option>
                                     Tidak ada data
@@ -53,17 +50,45 @@
 
                         <div class="mb-4">
                             <label class="form-label">Dokter Pemeriksa</label>
-                            <ul class="list-group">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">
-                                        <i class="fas fa-user-tag text-muted mr-2"></i> {{ $dokter }}
-                                    </span>
-                                </li>
-                            </ul>
+                            <div class="form-control bg-white" id="dokter-text">
+                                -
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="dokter_pemeriksa" id="dokter-id">
+
+                        <div class="mb-3">
+                            <label for="anamnesa" class="form-label">Anamnesa<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control @error('anamnesa') is-invalid @enderror" id="anamnesa" name="anamnesa" value="{{ old('anamnesa') }}" placeholder="Masukkan anamnesa" required>
+                            @error('anamnesa')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="diagnosa" class="form-label">Diagnosa<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control @error('diagnosa') is-invalid @enderror" id="diagnosa" name="diagnosa" value="{{ old('diagnosa') }}" placeholder="Masukkan diagnosa" required>
+                            @error('diagnosa')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="temuan_klinis" class="form-label">Temuan Klinis<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control @error('temuan_klinis') is-invalid @enderror" id="temuan_klinis" name="temuan_klinis" value="{{ old('temuan_klinis') }}" placeholder="Masukkan temuan klinis" required>
+                            @error('temuan_klinis')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <div class="d-flex justify-content-between">
-                            <a href="{{ route('admin.temu-dokter.index') }}" class="btn btn-secondary">
+                            <a href="{{ route('admin.rekam-medis.index') }}" class="btn btn-secondary">
                                 <i class="fas fa-arrow-left"></i> Kembali
                             </a>
                             <button type="submit" class="btn btn-primary">
@@ -76,4 +101,13 @@
         </div>
     </div>
 </div>
+<script>
+document.getElementById('idreservasi_dokter').addEventListener('change', function () {
+    let selectedOption = this.options[this.selectedIndex];
+    let dokter = selectedOption.getAttribute('data-dokter');
+    let dokter_id = selectedOption.getAttribute('id-dokter');
+    document.getElementById('dokter-text').textContent = dokter ?? '-';
+    document.getElementById('dokter-id').value = dokter_id ?? '';
+});
+</script>
 @endsection

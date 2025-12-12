@@ -11,7 +11,18 @@
       @include('layouts.lte.navbar')
       <!--end::Header-->
       <!--begin::Sidebar-->
-      @include('layouts.lte.sidebar')
+      {{ $session = session('user_role') }}
+      @if ($session == 1)
+        @include('layouts.lte.sidebar')
+      @elseif ($session == 2)
+        @include('layouts.lte.sidebar-dokter')
+      @elseif ($session == 3)
+        @include('layouts.lte.sidebar-perawat')
+      @elseif ($session == 4)
+        @include('layouts.lte.sidebar-resepsionis')
+      @elseif ($session == 5)
+        @include('layouts.lte.sidebar-pemilik')
+      @endif
       <!--end::Sidebar-->
       <!--begin::App Main-->
 

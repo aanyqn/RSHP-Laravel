@@ -22,7 +22,7 @@ class isDokter
 
         $userRole = session('user_role');
 
-        if ($userRole === 1) {
+        if ($userRole === 2) {
             return $next($request);
         } else {
             return back()->with('Error', 'Akses ditolak');

@@ -9,10 +9,19 @@ use App\Models\RasHewan;
 
 class RasHewanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $rasHewan = RasHewan::with('jenisHewan')->get();
         $groupedRasHewan = $rasHewan->groupBy('idjenis_hewan');
+        if ($request->filled('search')) {
+            $rasHewan = RasHewan::with('jenisHewan')
+                        ->whereLike('nama_ras', '%' . $request->search . '%')
+                        ->orWhereHas('jenisHewan', function($q) use($request)
+                        {
+                            $q->whereLike('nama_jenis_hewan', '%' . $request->search . '%');
+                        })->get();
+            $groupedRasHewan = $rasHewan->groupBy('idjenis_hewan');
+        }
         return view('admin.ras-hewan.index', compact('groupedRasHewan'));
     }
 

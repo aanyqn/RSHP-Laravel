@@ -2049,6 +2049,17 @@ progress {
   -webkit-overflow-scrolling: touch;
 }
 
+.table-fixed {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.table-fixed th,
+.table-fixed td {
+    word-wrap: break-word;
+    white-space: normal;
+}
+
 @media (max-width: 575.98px) {
   .table-responsive-sm {
     overflow-x: auto;
