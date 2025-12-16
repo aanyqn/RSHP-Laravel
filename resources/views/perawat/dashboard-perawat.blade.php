@@ -24,6 +24,16 @@
 <div class="app-content">
   <!--begin::Container-->
   <div class="container-fluid">
+    <div class="row ms-1 me-1">
+      <div class="alert alert-light" role="alert">
+        Selamat datang <strong>{{ session('user_name') }}</strong>!
+      </div>
+    </div>
+    <div class="alert alert-light">
+      <div class="row justify-content-center">
+          <h5>Informasi hari ini</h5>
+      </div>
+      <hr class="mt-1">
     <!--begin::Row-->
     <div class="row justify-content-center">
       <!--begin::Col-->
@@ -66,10 +76,6 @@
       <!--end::Col-->
     </div>
     <!--end::Row-->
-    <div class="row ms-1 me-1">
-      <div class="alert alert-light" role="alert">
-        Selamat datang <strong>{{ session('user_name') }}</strong>!
-      </div>
     </div>
     <div class="row ms-1 me-1">
       <div class="alert alert-primary" role="alert">

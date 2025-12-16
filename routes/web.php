@@ -21,6 +21,8 @@ Route::post('/auth/login', [LoginController::class, 'login'])->name('login.post'
 
 Route::post('/', [LoginController::class, 'logout'])->name('logout');
 
+Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile.index');
+
 Auth::routes();
 
 Route::middleware([isAdministrator::class])->group(function () {
@@ -109,6 +111,8 @@ Route::middleware([isAdministrator::class])->group(function () {
         Route::get('/admin/rekam-medis/create', [App\Http\Controllers\Admin\RekamMedisController::class, 'create'])->name('admin.rekam-medis.create');
         Route::post('/admin/rekam-medis/store', [App\Http\Controllers\Admin\RekamMedisController::class, 'store'])->name('admin.rekam-medis.store');
         Route::delete('/admin/rekam-medis/delete/{id}', [App\Http\Controllers\Admin\RekamMedisController::class, 'destroy'])->name('admin.rekam-medis.delete');
+        Route::get('/admin/rekam-medis/edit/{id}', [App\Http\Controllers\Admin\RekamMedisController::class, 'edit'])->name('admin.rekam-medis.edit');
+        Route::post('/admin/rekam-medis/update', [App\Http\Controllers\Admin\RekamMedisController::class, 'update'])->name('admin.rekam-medis.update');
 
     Route::get('/admin/rekam-medis/detail/{id}', [App\Http\Controllers\Admin\DetailRekamMedisController::class, 'index'])->name('admin.rekam-medis.detail.index');
         Route::get('/admin/rekam-medis/detail/create/{id}', [App\Http\Controllers\Admin\DetailRekamMedisController::class, 'create'])->name('admin.rekam-medis.detail.create');
@@ -124,6 +128,8 @@ Route::middleware([isAdministrator::class])->group(function () {
         Route::delete('/admin/temu-dokter/delete/{id}', [App\Http\Controllers\Admin\TemuDokterController::class, 'destroy'])->name('admin.temu-dokter.delete');
 
     Route::get('/admin/dashboard', [App\Http\Controllers\Admin\DashboardAdminController::class, 'index'])->name('admin.dashboard-admin');
+
+    Route::get('/admin/profile', [App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('admin.profile.index');
 });
 
 Route::middleware([isResepsionis::class])->group(function () {
@@ -140,10 +146,15 @@ Route::middleware([isResepsionis::class])->group(function () {
     Route::get('/resepsionis/registrasi/pemilik', [App\Http\Controllers\Resepsionis\RegistrasiPemilikController::class, 'index'])->name('resepsionis.registrasi.pemilik.index');
         Route::get('/resepsionis/registrasi/pemilik/create', [App\Http\Controllers\Resepsionis\RegistrasiPemilikController::class, 'create'])->name('resepsionis.registrasi.pemilik.create');
         Route::post('/resepsionis/registrasi/pemilik/store', [App\Http\Controllers\Resepsionis\RegistrasiPemilikController::class, 'store'])->name('resepsionis.registrasi.pemilik.store');
+        Route::get('/resepsionis/registrasi/pemilik/edit/{id}', [App\Http\Controllers\Resepsionis\RegistrasiPemilikController::class, 'edit'])->name('resepsionis.registrasi.pemilik.edit');
+        Route::post('/resepsionis/registrasi/pemilik/update', [App\Http\Controllers\Resepsionis\RegistrasiPemilikController::class, 'update'])->name('resepsionis.registrasi.pemilik.update');
 
     Route::get('/resepsionis/registrasi/pet', [App\Http\Controllers\Resepsionis\RegistrasiPetController::class, 'index'])->name('resepsionis.registrasi.pet.index');
         Route::get('/resepsionis/registrasi/pet/create', [App\Http\Controllers\Resepsionis\RegistrasiPetController::class, 'create'])->name('resepsionis.registrasi.pet.create');
         Route::post('/resepsionis/registrasi/pet/store', [App\Http\Controllers\Resepsionis\RegistrasiPetController::class, 'store'])->name('resepsionis.registrasi.pet.store');
+        Route::get('/resepsionis/registrasi/pet/edit/{id}', [App\Http\Controllers\Resepsionis\RegistrasiPetController::class, 'edit'])->name('resepsionis.registrasi.pet.edit');
+        Route::post('/resepsionis/registrasi/pet/update', [App\Http\Controllers\Resepsionis\RegistrasiPetController::class, 'update'])->name('resepsionis.registrasi.pet.update');
+
 });
 
 
@@ -154,6 +165,8 @@ Route::middleware([isDokter::class])->group(function () {
         Route::get('/dokter/rekam-medis/create', [App\Http\Controllers\Dokter\RekamMedisController::class, 'create'])->name('dokter.rekam-medis.create');
         Route::post('/dokter/rekam-medis/store', [App\Http\Controllers\Dokter\RekamMedisController::class, 'store'])->name('dokter.rekam-medis.store');
         Route::delete('/dokter/rekam-medis/delete/{id}', [App\Http\Controllers\Dokter\RekamMedisController::class, 'destroy'])->name('dokter.rekam-medis.delete');
+        Route::get('/dokter/rekam-medis/edit/{id}', [App\Http\Controllers\Dokter\RekamMedisController::class, 'edit'])->name('dokter.rekam-medis.edit');
+        Route::post('/dokter/rekam-medis/update', [App\Http\Controllers\Dokter\RekamMedisController::class, 'update'])->name('dokter.rekam-medis.update');
 
     Route::get('/dokter/rekam-medis/detail/{id}', [App\Http\Controllers\Dokter\DetailRekamMedisController::class, 'index'])->name('dokter.rekam-medis.detail.index');
         Route::get('/dokter/rekam-medis/detail/create/{id}', [App\Http\Controllers\Dokter\DetailRekamMedisController::class, 'create'])->name('dokter.rekam-medis.detail.create');
@@ -173,6 +186,8 @@ Route::middleware([isPerawat::class])->group(function () {
         Route::get('/perawat/rekam-medis/create', [App\Http\Controllers\Perawat\RekamMedisController::class, 'create'])->name('perawat.rekam-medis.create');
         Route::post('/perawat/rekam-medis/store', [App\Http\Controllers\Perawat\RekamMedisController::class, 'store'])->name('perawat.rekam-medis.store');
         Route::delete('/perawat/rekam-medis/delete/{id}', [App\Http\Controllers\Perawat\RekamMedisController::class, 'destroy'])->name('perawat.rekam-medis.delete');
+        Route::get('/perawat/rekam-medis/edit/{id}', [App\Http\Controllers\Perawat\RekamMedisController::class, 'edit'])->name('perawat.rekam-medis.edit');
+        Route::post('/perawat/rekam-medis/update', [App\Http\Controllers\Perawat\RekamMedisController::class, 'update'])->name('perawat.rekam-medis.update');
 
     Route::get('/perawat/rekam-medis/detail/{id}', [App\Http\Controllers\Perawat\DetailRekamMedisController::class, 'index'])->name('perawat.rekam-medis.detail.index');
         Route::get('/perawat/rekam-medis/detail/create/{id}', [App\Http\Controllers\Perawat\DetailRekamMedisController::class, 'create'])->name('perawat.rekam-medis.detail.create');

@@ -27,16 +27,27 @@ $breadcrumbs = [
         </span>
     </div>
 @endif
-@if (session('deleteSuccess'))
-    <div class="bg-red-100 border border-green-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-        <strong class="font-bold">Success!</strong>
-        <span class="block sm:inline">{{ session('deleteSuccess') }}</span>
-        
-        <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.style.display='none';">
-            <button>X</button>
-        </span>
+
+<div class="container-fluid">
+    <div class="alert alert-light mb-2">
+        <div class="row">
+            <form class="d-flex" role="search">
+                <input
+                    class="form-control me-2"
+                    type="search"
+                    name="search"
+                    placeholder="Cari nama atau nomor WA.."
+                    aria-label="Search"
+                />
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+                <a href="{{ route('resepsionis.registrasi.pemilik.index') }}">
+                    <button class="btn btn-outline-danger ms-2">Reset</button>
+                </a>
+            </form>
+        </div>
     </div>
-@endif
+</div>
+
 <div class="card m-3">
     <div class="card-header"><h3 class="card-title">Pemilik</h3></div>
     <!-- /.card-header -->
@@ -48,6 +59,7 @@ $breadcrumbs = [
                 <th>Nama Pemilik</th>
                 <th>No WA</th>
                 <th>Alamat</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -57,6 +69,13 @@ $breadcrumbs = [
                 <td>{{ $item->user->nama }}</td>
                 <td>{{ $item->no_wa }}</td>
                 <td>{{ $item->alamat }}</td>
+                <td>
+                    <a href="{{ route('resepsionis.registrasi.pemilik.edit', $item->user->iduser) }}">
+                        <button type="button" class="btn btn-sm btn-primary" onclick="window.location='#'">
+                            <i class="fas fa-edit"></i>Edit
+                        </button>
+                    </a>
+                </td>
             </tr>
         @endforeach
         </tbody>

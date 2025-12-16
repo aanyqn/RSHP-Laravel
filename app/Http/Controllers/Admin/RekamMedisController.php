@@ -11,23 +11,23 @@ class RekamMedisController extends Controller
 {
     public function index(Request $request)
     {
-        $daftarRekamMedis = \DB::table('rekam_medis')->where('created_at', now())->leftJoin('temu_dokter', 'rekam_medis.idreservasi_dokter', '=', 'temu_dokter.idreservasi_dokter')->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('rekam_medis.*', 'user.nama as dokter', 'pet.nama')->get();
+        $daftarRekamMedis = \DB::table('rekam_medis')->whereDate('created_at', now())->leftJoin('temu_dokter', 'rekam_medis.idreservasi_dokter', '=', 'temu_dokter.idreservasi_dokter')->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('rekam_medis.*', 'user.nama as dokter', 'pet.nama')->get();
         if($request->filled('search')) {
             $daftarRekamMedis = \DB::table('rekam_medis')->whereLike('pet.nama', '%' . $request->search . '%')->orWhereLike('user.nama', '%' . $request->search . '%')->leftJoin('temu_dokter', 'rekam_medis.idreservasi_dokter', '=', 'temu_dokter.idreservasi_dokter')->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('rekam_medis.*', 'user.nama as dokter', 'pet.nama')->get();
         }
         if($request->filled('date') && !$request->search) {
             if($request->date != null) {
                 if($request->date == 1) {
-                     $daftarRekamMedis = \DB::table('rekam_medis')->where('created_at', now())->leftJoin('temu_dokter', 'rekam_medis.idreservasi_dokter', '=', 'temu_dokter.idreservasi_dokter')->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('rekam_medis.*', 'user.nama as dokter', 'pet.nama')->get();
+                     $daftarRekamMedis = \DB::table('rekam_medis')->whereDate('created_at', now())->leftJoin('temu_dokter', 'rekam_medis.idreservasi_dokter', '=', 'temu_dokter.idreservasi_dokter')->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('rekam_medis.*', 'user.nama as dokter', 'pet.nama')->get();
                 }
                 else if($request->date == 2) {
-                     $daftarRekamMedis = \DB::table('rekam_medis')->whereBetween('created_at', [now()->subDays(7), now()])->leftJoin('temu_dokter', 'rekam_medis.idreservasi_dokter', '=', 'temu_dokter.idreservasi_dokter')->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('rekam_medis.*', 'user.nama as dokter', 'pet.nama')->get();
+                     $daftarRekamMedis = \DB::table('rekam_medis')->whereDate('created_at', '>=', now()->subDays(7))->leftJoin('temu_dokter', 'rekam_medis.idreservasi_dokter', '=', 'temu_dokter.idreservasi_dokter')->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('rekam_medis.*', 'user.nama as dokter', 'pet.nama')->get();
                 }
                 else if($request->date == 3) {
-                     $daftarRekamMedis = \DB::table('rekam_medis')->whereBetween('created_at', [now()->subMonth(), now()])->leftJoin('temu_dokter', 'rekam_medis.idreservasi_dokter', '=', 'temu_dokter.idreservasi_dokter')->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('rekam_medis.*', 'user.nama as dokter', 'pet.nama')->get();
+                     $daftarRekamMedis = \DB::table('rekam_medis')->whereDate('created_at', '>=', now()->subMonth())->leftJoin('temu_dokter', 'rekam_medis.idreservasi_dokter', '=', 'temu_dokter.idreservasi_dokter')->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('rekam_medis.*', 'user.nama as dokter', 'pet.nama')->get();
                 }
                 else if($request->date == 4) {
-                     $daftarRekamMedis = \DB::table('rekam_medis')->whereBetween('created_at', [now()->subMonths(3), now()])->leftJoin('temu_dokter', 'rekam_medis.idreservasi_dokter', '=', 'temu_dokter.idreservasi_dokter')->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('rekam_medis.*', 'user.nama as dokter', 'pet.nama')->get();
+                     $daftarRekamMedis = \DB::table('rekam_medis')->whereDate('created_at', '>=', now()->subMonths(3))->leftJoin('temu_dokter', 'rekam_medis.idreservasi_dokter', '=', 'temu_dokter.idreservasi_dokter')->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('rekam_medis.*', 'user.nama as dokter', 'pet.nama')->get();
                 }
                 else {
                     $daftarRekamMedis = \DB::table('rekam_medis')->leftJoin('temu_dokter', 'rekam_medis.idreservasi_dokter', '=', 'temu_dokter.idreservasi_dokter')->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('rekam_medis.*', 'user.nama as dokter', 'pet.nama')->get();
@@ -70,14 +70,6 @@ class RekamMedisController extends Controller
                 'string',
                 'max:1000',
                 'min:3',
-            ],
-            'dokter_pemeriksa' => [
-                'required',
-                'numeric'
-            ],
-            'idreservasi_dokter' => [
-                'required',
-                'numeric'
             ],
             'idrekam_medis' => [
                 'required',
@@ -131,6 +123,34 @@ class RekamMedisController extends Controller
             throw new \Exception(('Gagal menyimpan data rekam medis: ' . $e->getMessage()));
         }
     }
+
+    public function edit($id)
+    {
+        $data = \DB::table('rekam_medis')->where('idrekam_medis', $id)->select('anamnesa', 'temuan_klinis', 'diagnosa')->get();
+        return view('admin.daftar-rekam-medis.edit', compact('data', 'id'));
+    }
+    
+    protected function update(Request $request)
+    {
+        $validatedData = $this->validateRekamMedis($request, $request['idrekam_medis']);
+        $rekamMedis = $this->updateRekamMedis($validatedData);
+        return redirect()->route('admin.rekam-medis.index')
+                        ->with('success', 'Rekam medis berhasil diubah.');
+    }
+    protected function updateRekamMedis(array $data)
+    {
+        try {
+            $rekamMedis = \DB::table('rekam_medis')->where('idrekam_medis', $data['idrekam_medis'])->update([
+                'anamnesa' => $data['anamnesa'],
+                'diagnosa' => $data['diagnosa'],
+                'temuan_klinis' => $data['temuan_klinis']
+            ]);
+            return $rekamMedis;
+        } catch (\Exception $e) {
+            throw new \Exception(('Gagal menyimpan data: ' . $e->getMessage()));
+        }
+    }
+
     protected function destroy($id)
     {
         if (!RekamMedis::where('idrekam_medis', $id)->exists()) {

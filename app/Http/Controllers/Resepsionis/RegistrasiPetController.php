@@ -10,9 +10,21 @@ use Illuminate\Http\Request;
 
 class RegistrasiPetController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $pets = Pet::with('pemilik', 'rasHewan')->get();
+        if ($request->filled('search')) {
+            $pets = Pet::with('pemilik', 'rasHewan')
+            ->whereLike('nama', '%' . $request->search . '%')
+            ->orWhereHas('pemilik', function($q) use($request)
+            {
+                $q->whereHas('user', function($qu) use($request)
+                {
+                    $qu->whereLike('nama', '%' . $request->search . '%');
+                });
+            })
+            ->get();
+        }
         return view('resepsionis.registrasi.pet.index', compact('pets'));
     }
     public function create()
@@ -116,6 +128,41 @@ class RegistrasiPetController extends Controller
             throw new \Exception(('Gagal menyimpan data: ' . $e->getMessage()));
         }
     }
+
+    public function edit($id)
+    {
+        $pemilik = Pemilik::with('user')->get();
+        $ras = RasHewan::all();
+        $pet = Pet::where('idpet', $id)->get();
+        return view('resepsionis.registrasi.pet.edit', compact('id', 'pemilik', 'ras', 'pet'));
+    }
+
+    public function update(Request $request)
+    {
+        $validatedData = $this->validatePet($request, $request['idpet']);
+        $jenisHewan = $this->updatePet($validatedData);
+        return redirect()->route('resepsionis.registrasi.pet.index')
+                        ->with('success', 'Pet berhasil ubah.');
+    }
+
+    protected function updatePet(array $data)
+    {
+        try {
+            $pet = \DB::table('pet')->where('idpet', $data['idpet'])->update([
+                'nama' => $this->formatNama($data['nama']),
+                'tanggal_lahir' => $data['tanggal_lahir'],
+                'warna_tanda' => $data['warna_tanda'],
+                'jenis_kelamin' => $data['jenis_kelamin'],
+                'idpemilik' => $data['idpemilik'],
+                'idras_hewan' => $data['idras_hewan'],
+            ]);
+            
+        return $pet;
+        } catch (\Exception $e) {
+            throw new \Exception(('Gagal menyimpan data pet: ' . $e->getMessage()));
+        }
+    }
+
     protected function formatNama($nama)
     {
         return trim(ucwords(strtolower($nama)));

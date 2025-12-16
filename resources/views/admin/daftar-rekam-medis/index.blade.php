@@ -82,11 +82,11 @@ $breadcrumbs = [
 @forelse($daftarRekamMedis as $index => $rekamMedis)
 <div class="card m-4">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h3 class="card-title">Rekam Medis : {{ $index + 1 }}</h3>
+        <h3 class="card-title">Rekam Medis {{ $rekamMedis->idrekam_medis }}</h3>
         <div class="d-flex gap-2">
-            <a href="{{ route('admin.rekam-medis.detail.create', [$rekamMedis->idrekam_medis]) }}">
+            <a href="{{ route('admin.rekam-medis.edit', [$rekamMedis->idrekam_medis]) }}">
                 <button type="button" class="btn btn-sm btn-primary" onclick="window.location='#'">
-                    <i class="fas fa-edit"></i>Tambah Aksi
+                    <i class="fas fa-edit"></i>Edit
                 </button>
             </a>
             <a href="{{ route('admin.rekam-medis.detail.index', [$rekamMedis->idrekam_medis]) }}">

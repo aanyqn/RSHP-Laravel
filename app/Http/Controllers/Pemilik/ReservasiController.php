@@ -7,10 +7,32 @@ use Illuminate\Http\Request;
 
 class ReservasiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $pemilik_id = \DB::table('pemilik')->where('iduser', session('user_id'))->select('idpemilik')->get();
-        $daftar_temu_dokter = \DB::table('temu_dokter')->where('pemilik.idpemilik',  $pemilik_id[0]->idpemilik)->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('pemilik', 'pet.idpemilik', '=', 'pemilik.idpemilik')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('temu_dokter.*', 'pet.nama', 'user.nama AS dokter')->get();
+        $daftar_temu_dokter = \DB::table('temu_dokter')->where('idpemilik', $pemilik_id[0]->idpemilik)->whereDate('temu_dokter.waktu_daftar', now())->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('temu_dokter.*', 'pet.nama', 'user.nama AS dokter')->get();
+        if($request->filled('search')) {
+            $daftar_temu_dokter = \DB::table('temu_dokter')->where('idpemilik', $pemilik_id[0]->idpemilik)->whereLike('pet.nama', '%' . $request->search . '%')->orWhereLike('user.nama', '%' . $request->search . '%')->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('temu_dokter.*', 'pet.nama', 'user.nama AS dokter')->get();
+        }
+        if($request->filled('date') && !$request->search) {
+            if($request->date != null) {
+                if($request->date == 1) {
+                     $daftar_temu_dokter = \DB::table('temu_dokter')->where('idpemilik', $pemilik_id[0]->idpemilik)->whereDate('temu_dokter.waktu_daftar', now())->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('temu_dokter.*', 'pet.nama', 'user.nama AS dokter')->get();
+                }
+                else if($request->date == 2) {
+                     $daftar_temu_dokter = \DB::table('temu_dokter')->where('idpemilik', $pemilik_id[0]->idpemilik)->whereDate('temu_dokter.waktu_daftar', now()->subDay())->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('temu_dokter.*', 'pet.nama', 'user.nama AS dokter')->get();
+                }
+                else if($request->date == 3) {
+                     $daftar_temu_dokter = \DB::table('temu_dokter')->where('idpemilik', $pemilik_id[0]->idpemilik)->whereDate('temu_dokter.waktu_daftar', '>=', now()->subDays(7))->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('temu_dokter.*', 'pet.nama', 'user.nama AS dokter')->get();
+                }
+                else if($request->date == 4) {
+                     $daftar_temu_dokter = \DB::table('temu_dokter')->where('idpemilik', $pemilik_id[0]->idpemilik)->whereDate('temu_dokter.waktu_daftar', '>=', now()->subMonth())->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('temu_dokter.*', 'pet.nama', 'user.nama AS dokter')->get();
+                }
+                else {
+                    $daftar_temu_dokter = \DB::table('temu_dokter')->where('idpemilik', $pemilik_id[0]->idpemilik)->leftJoin('pet', 'temu_dokter.idpet', '=', 'pet.idpet')->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')->select('temu_dokter.*', 'pet.nama', 'user.nama AS dokter')->get();
+                }
+            }
+        }
         return view('pemilik.data-medis.reservasi.index', compact('daftar_temu_dokter'));
     }
     public function create()
@@ -45,12 +67,12 @@ class ReservasiController extends Controller
     protected function createTemuDokter($data)
     {
         try {
-            $no_urut_terakhir = \DB::table('temu_dokter')->whereDate('waktu_daftar', today())->max('no_urut');
-            $no_urut = $no_urut_terakhir ?? 1;
+            $no_urut_terakhir = \DB::table('temu_dokter')->whereDate('waktu_daftar', now())->max('no_urut');
+            $no_urut = $no_urut_terakhir ?? 0;
             $temuDokter = \DB::table('temu_dokter')->insert([
                 'idpet' => $data['idpet'],
                 'idrole_user' => $data['idrole_user'],
-                'no_urut' => $no_urut,
+                'no_urut' => $no_urut + 1,
                 'status' => 1
             ]);
             return $temuDokter;

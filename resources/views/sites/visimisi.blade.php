@@ -14,7 +14,7 @@
         <a class="navigation-list" href="{{ route('layanan') }}"><p>LAYANAN UMUM</p></a></a>
         <a class="navigation-list" href="{{ route('visimisi') }}"><p>VISI MISI DAN TUJUAN</p></a>
         <a class="navigation-list" href="{{ route('login') }}"><button class="login-button"><strong>LOGIN</strong></button></a>
-        <img src="./image/logo.webp" alt="logo-unair" width="400px" height="50">
+        <img src="/img/logo.png" alt="logo-unair" width="400px" height="50">
     </nav>
 
     <section class="visi" id="visi-section" style="padding: 30px;">

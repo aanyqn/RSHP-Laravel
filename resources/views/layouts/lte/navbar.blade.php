@@ -183,7 +183,7 @@
                 <!--end::Menu Body-->
                 <!--begin::Menu Footer-->
                 <li class="user-footer">
-                  <a href="#" class="btn btn-default btn-flat d-inline-flex">Profile</a>
+                  <a href="{{ route('profile.index') }}" class="btn btn-default btn-flat d-inline-flex">Profile</a>
                   <form action="{{ route('logout') }}" method="POST" class="d-inline-flex">
                       @csrf
                       <button type="submit" class="btn">

@@ -11,7 +11,9 @@
       @include('layouts.lte.navbar')
       <!--end::Header-->
       <!--begin::Sidebar-->
-      {{ $session = session('user_role') }}
+      @php
+        $session = session('user_role');
+      @endphp
       @if ($session == 1)
         @include('layouts.lte.sidebar')
       @elseif ($session == 2)

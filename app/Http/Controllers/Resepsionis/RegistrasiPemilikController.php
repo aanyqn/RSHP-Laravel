@@ -9,9 +9,18 @@ use App\Models\User;
 
 class RegistrasiPemilikController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $pemilik = Pemilik::with('user')->get();
+        if($request->filled('search')) {
+            $pemilik = Pemilik::with('user')
+                        ->whereHas('user', function ($q) use ($request)
+                        {
+                            $q->whereLike('nama', '%' . $request->search . '%');
+                        })
+                        ->orWhereLike('no_wa', '%' . $request->search . '%')
+                        ->get();
+        }
         return view('resepsionis.registrasi.pemilik.index', compact('pemilik'));
     }
 
@@ -30,7 +39,7 @@ class RegistrasiPemilikController extends Controller
     protected function validatePemilik(Request $request, $id = null)
     {
         $uniqueRule = $id ?
-            'unique:user,email,' . $id . ',email' :
+            'unique:user,email,' . $id . ',iduser' :
             'unique:user,email';
 
         if($id != null) {
@@ -119,6 +128,41 @@ class RegistrasiPemilikController extends Controller
 
         } catch (\Exception $e) {
             throw new \Exception(('Gagal menyimpan data: ' . $e->getMessage()));
+        }
+    }
+
+    public function edit($id)
+    {
+        $pemilik = Pemilik::with('user')->where('iduser', $id)->get();
+        return view('resepsionis.registrasi.pemilik.edit', compact('id', 'pemilik'));
+    }
+
+    public function update(Request $request)
+    {
+        $validatedData = $this->validatePemilik($request, $request['iduser']);
+        $jenisHewan = $this->updatePemilik($validatedData);
+        return redirect()->route('resepsionis.registrasi.pemilik.index')
+                        ->with('success', 'Pemilik berhasil ubah.');
+    }
+    protected function updatePemilik(array $data)
+    {
+        try {
+            $user = \DB::table('user')->where('iduser', $data['iduser'])->update([
+                'nama' => $this->formatNama($data['nama']),
+                'email' => $data['email'],
+            ]);
+
+            $pemilik = \DB::table('pemilik')->where('iduser', $data['iduser'])->update([
+                'alamat' => $data['alamat'],
+                'no_wa' => $data['no_wa'],
+            ]);
+            
+        return [
+            'user' => $user,
+            'pemilik' => $pemilik,
+        ];
+        } catch (\Exception $e) {
+            throw new \Exception(('Gagal menyimpan data jenis hewan: ' . $e->getMessage()));
         }
     }
 

@@ -37,6 +37,46 @@ $breadcrumbs = [
         </span>
     </div>
 @endif
+<div class="container-fluid">
+    <div class="alert alert-light mb-2">
+        <div class="row">
+            <form class="d-flex" role="search">
+                <input
+                    class="form-control me-2"
+                    type="search"
+                    name="search"
+                    placeholder="Cari nama pet atau dokter pemeriksa.."
+                    aria-label="Search"
+                />
+                <button class="btn btn-outline-primary me-2" type="submit">Search</button>
+                <select class="form-control me-2 @error('date') is-invalid @enderror" id="date" name="date" name="date">
+                    <option value="">
+                        Pilih berdasarkan waktu..
+                    </option>
+                    <option value="1" {{ request('date') == 1 ? 'selected' : ''}}>
+                        Hari ini
+                    </option>
+                    <option value="2" {{ request('date') == 2 ? 'selected' : ''}}>
+                        Kemarin
+                    </option>
+                    <option value="3" {{ request('date') == 3 ? 'selected' : ''}}>
+                        1 Minggu Terakhir
+                    </option>
+                    <option value="4" {{ request('date') == 4 ? 'selected' : ''}}>
+                        1 Bulan Terakhir
+                    </option>
+                    <option value="5" {{ request('date') == 5 ? 'selected' : ''}}>
+                        Semua
+                    </option>
+                </select>
+                <button class="btn btn-outline-primary me-2" type="submit">Filter</button>
+                <a href="{{ route('resepsionis.reservasi.index') }}">
+                    <span class="btn btn-outline-danger">Reset</span>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
 <div class="card m-3">
     <div class="card-header"><h3 class="card-title">Reservasi Temu Dokter</h3></div>
     <div class="card-body">

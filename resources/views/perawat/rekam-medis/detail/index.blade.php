@@ -67,7 +67,7 @@ $breadcrumbs = [
                 <td>{{ $detail->nama_kategori }}</td>
                 <td>{{ $detail->nama_kategori_klinis }}</td>
                 <td>{{ $detail->detail }}</td>
-                <td>
+                {{-- <td>
                     <a href="{{ route('perawat.rekam-medis.detail.edit', $detail->iddetail_rekam_medis) }}">
                         <button type="button" class="btn btn-sm btn-primary" onclick="window.location='#'">
                             <i class="fas fa-edit"></i>Edit
@@ -81,7 +81,7 @@ $breadcrumbs = [
                         @csrf
                         @method('DELETE')
                     </form>
-                </td>
+                </td> --}}
             </tr>
         @empty
         <tr>

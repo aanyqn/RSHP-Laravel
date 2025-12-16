@@ -37,14 +37,54 @@ $breadcrumbs = [
         </span>
     </div>
 @endif
+<div class="container-fluid">
+    <div class="alert alert-light mb-2">
+        <div class="row">
+            <form class="d-flex" role="search">
+                <input
+                    class="form-control me-2"
+                    type="search"
+                    name="search"
+                    placeholder="Cari nama pet atau dokter pemeriksa.."
+                    aria-label="Search"
+                />
+                <button class="btn btn-outline-primary me-2" type="submit">Search</button>
+                <select class="form-control me-2 @error('date') is-invalid @enderror" id="date" name="date" name="date">
+                    <option value="">
+                        Pilih berdasarkan waktu..
+                    </option>
+                    <option value="1" {{ request('date') == 1 ? 'selected' : ''}}>
+                        Hari ini
+                    </option>
+                    <option value="2" {{ request('date') == 2 ? 'selected' : ''}}>
+                        1 Minggu terakhir
+                    </option>
+                    <option value="3" {{ request('date') == 3 ? 'selected' : ''}}>
+                        1 Bulan terakhir
+                    </option>
+                    <option value="4" {{ request('date') == 4 ? 'selected' : ''}}>
+                        3 Bulan Terakhir
+                    </option>
+                    <option value="5" {{ request('date') == 5 ? 'selected' : ''}}>
+                        Semua
+                    </option>
+                </select>
+                <button class="btn btn-outline-primary me-2" type="submit">Filter</button>
+                <a href="{{ route('perawat.rekam-medis.index') }}">
+                    <span class="btn btn-outline-danger">Reset</span>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
 @forelse($daftarRekamMedis as $index => $rekamMedis)
 <div class="card m-4">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h3 class="card-title">Rekam Medis : {{ $index + 1 }}</h3>
+        <h3 class="card-title">Rekam Medis {{ $rekamMedis->idrekam_medis }}</h3>
         <div class="d-flex gap-2">
-            <a href="{{ route('perawat.rekam-medis.detail.create', [$rekamMedis->idrekam_medis]) }}">
+            <a href="{{ route('perawat.rekam-medis.edit', [$rekamMedis->idrekam_medis]) }}">
                 <button type="button" class="btn btn-sm btn-primary" onclick="window.location='#'">
-                    <i class="fas fa-edit"></i>Tambah Aksi
+                    <i class="fas fa-edit"></i>Edit
                 </button>
             </a>
             <a href="{{ route('perawat.rekam-medis.detail.index', [$rekamMedis->idrekam_medis]) }}">
@@ -52,7 +92,6 @@ $breadcrumbs = [
                     <i class="fas fa-edit"></i>Detail
                 </button>
             </a>
-            
         </div>
     </div>
     <!-- /.card-header -->

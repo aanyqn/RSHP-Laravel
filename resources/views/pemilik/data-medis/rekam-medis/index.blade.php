@@ -22,16 +22,46 @@ $breadcrumbs = [
         </span>
     </div>
 @endif
-@if (session('deleteSuccess'))
-    <div class="bg-red-100 border border-green-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-        <strong class="font-bold">Success!</strong>
-        <span class="block sm:inline">{{ session('deleteSuccess') }}</span>
-        
-        <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.style.display='none';">
-            <button>X</button>
-        </span>
+<div class="container-fluid">
+    <div class="alert alert-light mb-2">
+        <div class="row">
+            <form class="d-flex" role="search">
+                <input
+                    class="form-control me-2"
+                    type="search"
+                    name="search"
+                    placeholder="Cari nama pet atau dokter pemeriksa.."
+                    aria-label="Search"
+                />
+                <button class="btn btn-outline-primary me-2" type="submit">Search</button>
+                <select class="form-control me-2 @error('date') is-invalid @enderror" id="date" name="date" name="date">
+                    <option value="">
+                        Pilih berdasarkan waktu..
+                    </option>
+                    <option value="1" {{ request('date') == 1 ? 'selected' : ''}}>
+                        Hari ini
+                    </option>
+                    <option value="2" {{ request('date') == 2 ? 'selected' : ''}}>
+                        1 Minggu terakhir
+                    </option>
+                    <option value="3" {{ request('date') == 3 ? 'selected' : ''}}>
+                        1 Bulan terakhir
+                    </option>
+                    <option value="4" {{ request('date') == 4 ? 'selected' : ''}}>
+                        3 Bulan Terakhir
+                    </option>
+                    <option value="5" {{ request('date') == 5 ? 'selected' : ''}}>
+                        Semua
+                    </option>
+                </select>
+                <button class="btn btn-outline-primary me-2" type="submit">Filter</button>
+                <a href="{{ route('pemilik.data-medis.rekam-medis.index') }}">
+                    <span class="btn btn-outline-danger">Reset</span>
+                </a>
+            </form>
+        </div>
     </div>
-@endif
+</div>
 @forelse($daftarRekamMedis as $index => $rekamMedis)
 <div class="card m-4">
     <div class="card-header d-flex justify-content-between align-items-center">
