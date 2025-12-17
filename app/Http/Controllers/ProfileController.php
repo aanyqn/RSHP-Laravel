@@ -18,12 +18,14 @@ class ProfileController extends Controller
         } else if ($role_id == 3) {
             $info = \DB::table('perawat')->where('id_user', $id)->select('id_perawat','no_hp', 'alamat', 'pendidikan', 'jenis_kelamin')->get();
         } 
-        $info = $info->map(function ($item) {
+        if ($info != null) {
+            $info = $info->map(function ($item) {
             if (!property_exists($item, 'jenis_kelamin')) {
                 $item->jenis_kelamin = null;
             }
             return $item;
         });
+        }
         return view('profile.index', compact('info'));
     }
 }

@@ -8,6 +8,16 @@ $breadcrumbs = [
     'Tambah' => null,
 ];
 @endphp
+@if (session('fail'))
+    <div class="bg-red-100 border border-green-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Something Wrong!</strong>
+        <span class="block sm:inline">{{ session('fail') }}</span>
+        
+        <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.style.display='none';">
+            <button>X</button>
+        </span>
+    </div>
+@endif
 <div class="container m-5">
     <div class="row justify-content-center">
         <div class="col-md-8">

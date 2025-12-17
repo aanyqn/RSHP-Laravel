@@ -124,7 +124,7 @@ class PemilikController extends Controller
             ]);
             $iduser = \DB::table('user')->where('email', $data['email'])->select('iduser')->get();
             $set_role = \DB::table('role_user')->insert([
-                'iduser' => $iduser->iduser,
+                'iduser' => $iduser[0]->iduser,
                 'idrole' => 5,
                 'status' => 1,
             ]);

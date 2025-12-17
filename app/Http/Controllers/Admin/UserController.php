@@ -29,9 +29,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validatedData = $this->validateUser($request);
-        $pemilik = $this->createUser($validatedData);
+        $user = $this->createUser($validatedData);
+        if ($user == null) {
+            return redirect()->route('admin.user.create')
+                        ->with('fail', 'Password berbeda');
+        }
         return redirect()->route('admin.user.index')
-                        ->with('success', 'User berhasil ditambahkan.');
+                        ->with('success', 'User berhasil ditambahkan.')->withInput();
     }
 
     protected function validateUser(Request $request, $id = null)
@@ -92,7 +96,7 @@ class UserController extends Controller
         
         try {
             if($data['password'] != $data['confirm_password']) {
-            return redirect()->route('admin.user.create')->with('fail', 'Password berbeda.');
+                return $user = null;
             }
             $hashed = \Hash::make($data['password']);
             $user = User::create([

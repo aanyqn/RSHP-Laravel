@@ -12,6 +12,11 @@ $breadcrumbs = [
     <a href="{{ route('admin.rekam-medis.index') }}" class="btn btn-primary">
         <i class="fas fa-arrow-left"></i> Back
     </a>
+    <form action="{{ route('admin.rekam-medis.detail.create', $id) }}" method="GET">
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Tambah Detail
+        </button>
+    </form>
 </div>
 @if (session('success'))
     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
